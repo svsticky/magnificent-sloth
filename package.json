@@ -1,0 +1,14 @@
+{
+  "name": "magnificent-sloth",
+  "version": "0.0.1",
+  "description": "Point of Sale for Dead Mongoose",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^7.1.11"
+  },
+  "author": "",
+  "license": "MIT"
+}
