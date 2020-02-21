@@ -1,9 +1,13 @@
+/* Global */
 body {
 	background-color: #f8f8f4;
+	overflow: hidden;
 }
 
+/* Menu */
 .menu {
 	height: 120px;
+	margin-bottom: 0 !important;
 	background-color: #c53f78 !important;
 }
 
@@ -22,10 +26,16 @@ body {
 	width: 100px;
 }
 
+/* Default components */
+
+main {
+	height: calc(100% - 120px);
+	position: relative;
+	overflow-y: auto;
+}
+
 footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
 	width: 100%;
 	text-align: center;
+	height: 20px;
 }
