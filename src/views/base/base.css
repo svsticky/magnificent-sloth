@@ -1,3 +1,7 @@
+body {
+	background-color: #f8f8f4;
+}
+
 .menu {
 	height: 120px;
 	background-color: #c53f78 !important;
@@ -8,7 +12,7 @@
 	font-size: 40px;
 }
 
-#funds {
+#userFunds {
 	font-size: 30px;
 	text-align: center;
 }

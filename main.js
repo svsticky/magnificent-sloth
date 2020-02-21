@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require('electron');
-const ejs = require('ejs');
 
 function createWindow () {
   let win = new BrowserWindow({
@@ -14,4 +13,4 @@ function createWindow () {
   win.webContents.openDevTools()
 }
 
-app.on('ready', createWindow);
+app.whenReady().then(createWindow);

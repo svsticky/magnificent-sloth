@@ -1,9 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <!-- Application Metadata -->
   <title>Magnificent Sloth</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+  <!-- CSS Imports -->
   <link rel="stylesheet" type="text/css" href="../../../src/static/semantic/dist/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="./base.css">
 <body>
@@ -13,16 +18,16 @@
     class="item"
     id="logo"
   />
-  <span class="item"> 
+  <span class="item link" id="products"> 
     Products
   </span>
-  <span class="item">
+  <span class="item link" id="activities">
     Activities
   </span>
-  <span class="item">
+  <span class="item link" id="funds">
     Add funds
   </span>
-  <span class="item" id="funds">
+  <span class="item" id="userFunds">
     Credit<br>
     €14.14
   </span>
@@ -33,5 +38,8 @@
 <footer>
 	Study Association Sticky - 2020 - Magnificent Sloth
 </footer>
+<script>
+  require('./menu');
+</script>
 </body>
 </html>
