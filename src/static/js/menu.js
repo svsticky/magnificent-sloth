@@ -1,5 +1,5 @@
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 
 function renderHTML(page) {
   page = path.join(__dirname, page);
@@ -14,4 +14,4 @@ document.querySelectorAll('.link').forEach((element, index) => {
   });
 });
 
-renderHTML('../products/products.html');
+renderHTML('../../views/products/products.html');
