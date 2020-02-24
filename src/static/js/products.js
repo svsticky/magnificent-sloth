@@ -2,14 +2,16 @@ const { remote } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { net } = remote;
+const settings = require('../../../settings.json');
 const request = net.request({
   method: 'GET',
-  hostname: 'koala.rails.local',
-  port: 3000,
-  path: 'api/checkout/products?token=token'
+  hostname: settings.host,
+  port: settings.port,
+  path: `api/checkout/products?token=${settings.token}`
 });
 
 request.on('response', (response) => {
+  console.log(settings);
   response.on('data', data => {
     let bufferData = Buffer.from(data);
     products = JSON.parse(bufferData.toString());

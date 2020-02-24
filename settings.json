@@ -1,0 +1,5 @@
+{
+  "host": "koala.rails.local",
+  "port": 3000,
+  "token": "token"
+}
