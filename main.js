@@ -9,9 +9,6 @@ const {
 } = require('./modules/api');
 require('dotenv').config();
 
-function initialize() {
-  createWindow()
-}
 
 function createWindow() {
 
@@ -25,11 +22,11 @@ function createWindow() {
 
   win.removeMenu();
   win.webContents.openDevTools();
-  win.loadFile('src/views/base/base.html');
+  win.loadFile('src/views/idle/idle.html');
 
   // For development purposes
   globalShortcut.register('Ctrl+1', () => {
-    win.loadFile('src/views/base/base.html')
+    win.loadFile('src/views/idle/idle.html')
   })
 
   globalShortcut.register('Ctrl+2', () => {
