@@ -10,6 +10,7 @@ function createWindow () {
     }
   });
   win.removeMenu();
+  win.webContents.openDevTools();
   win.loadFile('src/views/base/base.html');
 }
 

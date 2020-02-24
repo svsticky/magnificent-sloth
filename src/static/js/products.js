@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { net } = remote;
 const settings = require('../../../settings.json');
+const { AddToCart } = require('./cart.js');
 const request = net.request({
   method: 'GET',
   hostname: settings.host,
@@ -11,7 +12,6 @@ const request = net.request({
 });
 
 request.on('response', (response) => {
-  console.log(settings);
   response.on('data', data => {
     let bufferData = Buffer.from(data);
     products = JSON.parse(bufferData.toString());
@@ -27,8 +27,8 @@ request.end();
 function renderProduct(prod) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
-
   let html = document.createElement('article');
+
   html.className = 'column';
   html.innerHTML = product;
   html.getElementsByClassName('name')[0].innerHTML = prod.name
@@ -36,6 +36,8 @@ function renderProduct(prod) {
   html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
   if(prod.image)
     html.getElementsByClassName('productImage')[0].src = prod.image
+  html.addEventListener("touchstart", () => AddToCart(prod));
+  html.addEventListener("click", () => AddToCart(prod));
 
   document.getElementById('productList').append(html);
 }
