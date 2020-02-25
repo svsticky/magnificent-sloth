@@ -4,6 +4,9 @@ const fs = require('fs');
 const { net } = remote;
 const settings = require('../../../settings.json');
 const { AddToCart } = require('./cart.js');
+
+// Define the API request we have to do to get all the items
+// from Koala.
 const request = net.request({
   method: 'GET',
   hostname: settings.host,
@@ -11,6 +14,8 @@ const request = net.request({
   path: `api/checkout/products?token=${settings.token}`
 });
 
+// When we receive the data from Koala, render these
+// through the renderProduct function.
 request.on('response', (response) => {
   response.on('data', data => {
     let bufferData = Buffer.from(data);
@@ -23,7 +28,7 @@ request.on('response', (response) => {
 
 request.end();
 
-// Render each product
+// Renders the block for each product.
 function renderProduct(prod) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
