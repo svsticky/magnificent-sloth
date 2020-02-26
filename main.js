@@ -11,9 +11,6 @@ const {
 } = require('nfc-pcsc');
 require('dotenv').config();
 
-
-
-
 function initialize() {
   const nfc = new NFC();
   nfc.on('reader', reader => {
@@ -51,7 +48,7 @@ function createWindow() {
   });
   // win.removeMenu();
   win.webContents.openDevTools();
-  win.loadFile('src/views/base/base.html');
+  win.loadFile('src/views/home/home.html');
 }
 
 
