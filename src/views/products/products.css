@@ -1,0 +1,31 @@
+#productList {
+  width: calc(100% - 200px);
+}
+
+#purchase {
+  width: 100%;
+}
+
+#cartTitle {
+  font-size: 24px;
+}
+
+#productName {
+  font-size: 16px;
+}
+
+.cartSection {
+  height: 440px; 
+  overflow-y: auto;
+}
+
+.cart {
+  position: fixed; 
+  width: 200px; 
+  right: 20px; 
+  top: 140px;
+}
+
+.products {
+  margin: 20px;
+}

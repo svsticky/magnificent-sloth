@@ -1,20 +1,18 @@
-<article style="margin: 20px;">
-  <section class="ui five column grid products" style="width: calc(100% - 200px)" id="productList">
-
-  </section>
-  <aside class="cart" style="position: fixed; width: 200px; right: 20px; top: 140px;">
+<article class="products">
+  <section class="ui five column grid products" id="productList"></section>
+  <aside class="cart">
     <article class="ui one column">
       <div class="ui card">
         <div class="content">
-          <h1 class="header" style="font-size: 24px;">Cart</h1>
+          <h1 class="header" id="cartTitle">Cart</h1>
           <div class="ui divider"></div>
-          <div class="description" style="height: 440px; overflow-y: auto;">
+          <div class="description cartSection">
             <section id="cartList"></section>
           </div>
           <div class="ui divider"></div>
           <div class="extra content">
             <span id="totalCost">€0.00</span>
-            <button class="ui button" id="purchase" style="width: 100%;">Purchase</button>
+            <button class="ui button" id="purchase">Purchase</button>
           </div>
         </div>
       </div>
