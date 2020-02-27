@@ -13,7 +13,7 @@ function renderHTML(page) {
 function renderHomePage() {
   renderHTML(`../../views/products/products.html`);
   products.GetProducts();
-  cart.renderCart();
+  cart.ClearCart();
 }
 
 document.querySelectorAll('.link').forEach((element) => {
