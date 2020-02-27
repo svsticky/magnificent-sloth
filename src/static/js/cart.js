@@ -15,13 +15,13 @@ module.exports.AddToCart = (product) => {
     product.amount = 1;
     cartList.push(product);
   }
-  module.exports.renderCart();
+  module.exports.RenderCart();
 }
 
 // Gets all the items from the cart and shows the product with amount
 // in the cart for the user to see. This function also increments the
 // total price which will be displayed for the user to see.
-module.exports.renderCart = () => {
+module.exports.RenderCart = () => {
   document.getElementById('cartList').innerHTML = '';
   for(let i = 0; i < cartList.length; i++) {
     let cartElement = document.createElement('p');
@@ -30,6 +30,12 @@ module.exports.renderCart = () => {
   }
   document.getElementById('totalCost').innerHTML = `€${Number(cost).toFixed(2)}`;
   document.getElementById('purchase').addEventListener('click', () => purchase)
+}
+
+module.exports.ClearCart = () => {
+  cartList = new Array();
+  cost = 0;
+  module.exports.RenderCart();
 }
 
 // Event for when the user click purchase. Send a request to Koala
