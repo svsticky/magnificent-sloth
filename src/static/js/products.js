@@ -5,28 +5,33 @@ const { net } = remote;
 const settings = require('../../../settings.json');
 const { AddToCart } = require('./cart.js');
 
-// Define the API request we have to do to get all the items
-// from Koala.
-const request = net.request({
-  method: 'GET',
-  hostname: settings.host,
-  port: settings.port,
-  path: `api/checkout/products?token=${settings.token}`
-});
-
-// When we receive the data from Koala, render these
-// through the renderProduct function.
-request.on('response', (response) => {
-  response.on('data', data => {
-    let bufferData = Buffer.from(data);
-    products = JSON.parse(bufferData.toString());
-    
-    for(let i = 0; i < products.length; i++)
-      renderProduct(products[i]);
+module.exports.GetProducts = () => {
+  // Define the API request we have to do to get all the items
+  // from Koala.
+  const request = net.request({
+    method: 'GET',
+    hostname: settings.host,
+    port: settings.port,
+    path: `api/checkout/products?token=${settings.token}`
   });
-});
 
-request.end();
+  // When we receive the data from Koala, render these
+  // through the renderProduct function.
+  request.on('response', (response) => {
+    response.on('data', data => {
+      let bufferData = Buffer.from(data);
+      products = JSON.parse(bufferData.toString());
+      
+      for(let i = 0; i < products.length; i++)
+        renderProduct(products[i]);
+    });
+  });
+  request.on('error', data => {
+    document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
+  });
+
+  request.end();
+}
 
 // Renders the block for each product.
 function renderProduct(prod) {
