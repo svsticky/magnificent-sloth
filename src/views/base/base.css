@@ -1,0 +1,31 @@
+body {
+	background-color: #f8f8f4;
+}
+
+.menu {
+	height: 120px;
+	background-color: #c53f78 !important;
+}
+
+.menu > span {
+	color: #f0f0f0 !important;
+	font-size: 40px;
+}
+
+#userFunds {
+	font-size: 30px;
+	text-align: center;
+}
+
+.menu > #logo {
+	padding: 0;
+	width: 100px;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}

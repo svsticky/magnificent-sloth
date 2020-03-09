@@ -7,12 +7,15 @@
     "start": "./node_modules/.bin/electron-rebuild && electron ."
   },
   "devDependencies": {
-    "electron": "^7.1.11",
+    "electron": "^8.0.2",
     "electron-rebuild": "^1.10.0"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "fomantic-ui": "^2.8.4",
+    "global": "^4.4.0",
+    "jslint": "^0.12.1",
     "nfc-pcsc": "^0.8.0"
   }
 }

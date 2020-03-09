@@ -1,0 +1,29 @@
+body {
+	background-color: #c53f78;
+}
+#title {
+    position: relative;
+    display: block;
+    height: 20% !important;
+    text-align: center;
+    color: #ffffff;
+    font-size: 50px;
+}
+#input {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 40%;
+}
+.keypad {
+    display: block;
+    text-align: center;
+}
+.keyrow{
+    margin-top: 0.5%;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
