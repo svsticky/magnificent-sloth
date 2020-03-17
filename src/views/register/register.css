@@ -3,8 +3,7 @@ body {
 }
 #title {
     position: relative;
-    display: block;
-    height: 20% !important;
+    padding-top: 10%;
     text-align: center;
     color: #ffffff;
     font-size: 50px;
@@ -13,14 +12,21 @@ body {
     position: relative;
     display: block;
     margin: auto;
-    width: 40%;
+    width: 30%;
 }
 .keypad {
-    display: block;
+    width: 30%;
+    padding-top:2%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto ; 
+    gap: 1.5% 0%;
+}   
+
+.actions{
     text-align: center;
-}
-.keyrow{
-    margin-top: 0.5%;
+    margin-top: 3%;
 }
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
