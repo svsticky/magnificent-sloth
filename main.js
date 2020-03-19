@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const { Request } = require('./modules/api');
 
 function createWindow () {
 
@@ -15,3 +16,9 @@ function createWindow () {
 }
 
 app.whenReady().then(createWindow);
+
+ipcMain.on('request', (event, arg) => {
+  Request(arg.type, arg.url, arg.body, (err, data) => {
+    event.sender.send('response', {name: arg.name, err: err, data: data});
+  });
+});

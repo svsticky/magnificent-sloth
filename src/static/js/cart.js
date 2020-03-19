@@ -1,6 +1,5 @@
 const settings = require('../../../settings.json');
-const { remote } = require('electron');
-const { net } = remote;
+const { ipcRenderer } = require('electron');
 
 let cartList = new Array();
 let cost = 0;
@@ -58,25 +57,29 @@ function purchase() {
 
   userInfo.items = `[${userInfo.items.slice(0, -1)}]`
 
-  const request = net.request({
-    method: 'POST',
-    hostname: settings.host,
-    port: settings.port,
-    path: `api/checkout/transaction?token=${userInfo.token}&uuid=${userInfo.uuid}&items=${userInfo.items}`
+  ipcRenderer.send('request', {
+    name: 'purchase',
+    type: 'POST',
+    url: `api/checkout/transaction?token=${userInfo.token}&uuid=${userInfo.uuid}&items=${userInfo.items}`,
+    body: null,
+    callback: (data, err) => {
+      if(err !== null) {
+        console.error(err);
+      } else {
+        console.log(data);
+      }
+    }
   });
-
-  request.on('response', (response) => {
-    console.log(response)
-    response.on('data', data => {
-      let bufferData = Buffer.from(data);
-      let res = bufferData.toString();
-      console.log(res);
-    });
-  });
-  
-  request.on('error', (response) => {
-    console.log(response)
-  });
-
-  request.end();
 }
+
+// Handle purchase response
+ipcRenderer.on('response', (event, arg) => {
+  if (arg.name === 'purchase') {
+    if (arg.err !== null) {
+      console.error(arg.err);
+    } else {
+      console.log('Purchase successful');
+      module.exports.ClearCart();
+    }
+  }
+});
