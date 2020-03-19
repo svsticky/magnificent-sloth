@@ -1,4 +1,7 @@
 const settings = require('../../../settings.json');
+const { remote } = require('electron');
+const { net } = remote;
+
 let cartList = new Array();
 let cost = 0;
 
@@ -29,7 +32,7 @@ module.exports.RenderCart = () => {
     document.getElementById('cartList').append(cartElement);
   }
   document.getElementById('totalCost').innerHTML = `€${Number(cost).toFixed(2)}`;
-  document.getElementById('purchase').addEventListener('click', () => purchase)
+  document.getElementById('purchase').addEventListener('click', purchase)
 }
 
 module.exports.ClearCart = () => {
@@ -40,21 +43,30 @@ module.exports.ClearCart = () => {
 
 // Event for when the user click purchase. Send a request to Koala
 // to handle the payment for us.
+
 function purchase() {
   let userInfo = {
     token: settings.token,
-    uuid: '800a3bc7', // Test ID
-    items: cartList
+    uuid: 'ec3ed712', // Test ID
+    items: ''
   }
+
+  cartList.forEach(item => { 
+    for(let i = 0; i < item.amount; i++)
+      userInfo.items += `${item.id},`;
+  });
+
+  userInfo.items = `[${userInfo.items.slice(0, -1)}]`
 
   const request = net.request({
     method: 'POST',
     hostname: settings.host,
     port: settings.port,
-    path: 'api/checkout/transaction'
+    path: `api/checkout/transaction?token=${userInfo.token}&uuid=${userInfo.uuid}&items=${userInfo.items}`
   });
 
   request.on('response', (response) => {
+    console.log(response)
     response.on('data', data => {
       let bufferData = Buffer.from(data);
       let res = bufferData.toString();
@@ -62,5 +74,9 @@ function purchase() {
     });
   });
   
-  request.end(userInfo);
+  request.on('error', (response) => {
+    console.log(response)
+  });
+
+  request.end();
 }
