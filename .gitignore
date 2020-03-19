@@ -8,3 +8,4 @@ src/static/semantic/src/themes
 src/static/semantic/tasks
 !src/static/semantic/dist/semantic.min.css
 !src/static/semantic/dist/semantic.min.js
+.env

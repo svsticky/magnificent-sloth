@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { Request } = require('./modules/api');
+require('dotenv').config();
 
 function createWindow () {
 
