@@ -1,12 +1,12 @@
 const { net } = require('electron');
-const settings = require('../settings.json')
 
 module.exports.Request = async (type, url, body, callback) => {
   const request = net.request({
     method: type,
-    hostname: settings.host,
-    port: settings.port,
-    path: url
+    protocol: process.env.PROTOCOL,
+    hostname: process.env.HOST,
+    port: process.env.PORT,
+    path: url.includes('?') ? `${url}&token=${process.env.TOKEN}` : `${url}?token=${process.env.TOKEN}`
   });
 
   request.on('response', (response) => {

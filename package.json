@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "fomantic-ui": "^2.8.3",
     "global": "^4.4.0",
     "jslint": "^0.12.1"

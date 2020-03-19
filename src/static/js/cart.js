@@ -1,4 +1,3 @@
-const settings = require('../../../settings.json');
 const { ipcRenderer } = require('electron');
 
 let cartList = new Array();
@@ -42,10 +41,8 @@ module.exports.ClearCart = () => {
 
 // Event for when the user click purchase. Send a request to Koala
 // to handle the payment for us.
-
 function purchase() {
   let userInfo = {
-    token: settings.token,
     uuid: 'ec3ed712', // Test ID
     items: ''
   }
@@ -60,15 +57,8 @@ function purchase() {
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
-    url: `api/checkout/transaction?token=${userInfo.token}&uuid=${userInfo.uuid}&items=${userInfo.items}`,
-    body: null,
-    callback: (data, err) => {
-      if(err !== null) {
-        console.error(err);
-      } else {
-        console.log(data);
-      }
-    }
+    url: `api/checkout/transaction?uuid=${userInfo.uuid}&items=${userInfo.items}`,
+    body: null
   });
 }
 
