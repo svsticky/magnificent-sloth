@@ -8,20 +8,18 @@ function RegisterCard(studentnr) {
         url:  'api/checkout/card',
         body: {
             student: studentnr,
-            uuid: "Dummyssss" // Need to implement with nfc.
+            uuid: "Dummyssssss" // Need to implement with nfc.
         }
     })
 }
 
 ipcRenderer.on('register', (event,arg) => {
-  console.log('test');
   if (arg.data.statusCode == 201){
-    console.log('succes')
+    $('ui.basic.modal').modal('show')
   }
   else{
-    console.log('failure')
   }
-
+ 
 })
 
 document.querySelectorAll('.key').forEach((element, index) => {
@@ -44,8 +42,10 @@ function validate(a, b, c) {
 }
 
 document.querySelector(".register").addEventListener('click', function (e) {
+    
     if (/\F\d{6}/.test(studentinput.value) || (/\d{7}/.test(studentinput.value) && validate(studentinput.value))) {
-        RegisterCard(studentinput.value);
+      console.log('registering cards');
+      RegisterCard(studentinput.value);
     } else {
         $('.ui.massive.input').popup('show');
     }
