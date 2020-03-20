@@ -1,75 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-  <!-- Application Metadata -->
-  <title>Magnificent Sloth</title>
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
 <link rel="stylesheet" type="text/css" href="../../../src/static/semantic/dist/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="./register.css">
 </head>
-<body>
 
+
+
+<body>
 <h1 id='title'>Laat je kaart op de reader liggen 
   en vul je Studentennummer in</h1>
-<div id="input" class="ui massive input">
-    <input type="number" class="studentinput" placeholder="Studentennummer">
+<div id="input" class="ui massive input" data-content="Studentennummer is niet geldig" data-position="right center">
+    <input type="text" class="studentinput" placeholder="Studentennummer">
 </div>
 <div class="keypad">
 
-    <button tabindex="0"value="1" class="key massive ui button">
+    <div value='1' class="key massive ui button">
       1
-    </button>
+    </div>
 
-    <button tabindex="0"value="2" class="key massive ui button">
+    <div value="2" class="key massive ui button">
       2
-    </button>
+    </div>
 
-    <button tabindex="0"value="3" class="key massive ui button">
+    <div value="3" class="key massive ui button">
       3
-    </button>
+    </div>
 
-    <button tabindex="0"value="4" class="key massive ui button">
+    <div value="4" class="key massive ui button">
       4
-    </button>
+    </div>
 
-    <button tabindex="0"value="5" class="key massive ui button">
+    <div value="5" class="key massive ui button">
       5
-    </button>
+    </div>
 
-    <button tabindex="0"value="6" class="key massive ui button">
+    <div value="6" class="key massive ui button">
       6
-    </button>
+    </div>
 
-    <button tabindex="0"value="7" class="key massive ui button">
+    <div value="7" class="key massive ui button">
       7
-    </button>
+    </div>
 
-    <button tabindex="0"value="8" class="key massive ui button">
+    <div value="8" class="key massive ui button">
       8
-    </button>
+    </div>
 
-    <button tabindex="0"value="9" class="key massive ui button">
+    <div value="9" class="key massive ui button">
       9
-    </button>
-    <button tabindex="0" value="10"class="undo massive ui icon button">
+    </div>
+    <div class="undo massive ui icon button">
       <i class="arrow left icon"></i>
-    </button>
-    <button tabindex="0" value="0" class="massive ui button">
+    </div>
+    <div value="0" class="key massive ui button">
       0
-    </button>
+    </div>
+    <div value="F" class="key massive ui button">
+      F
+    </div>
   </div>
   <div class="actions keyrow">
-    <button tabindex="0" value="10" class="massive ui icon button">
+    <div value="10" class="register massive ui icon button">
       Register
-    </button>
+    </div>
   </div>
 </div>
 
 <script>
+  window.$ = window.jQuery = require('jquery');
+  require('../../../src/static/semantic/dist/semantic.min.js');
   require('./register');
+  
 </script>
 </body>
 </html>
