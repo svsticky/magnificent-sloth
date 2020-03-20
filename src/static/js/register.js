@@ -1,6 +1,8 @@
 const { ipcRenderer } = require('electron')
 const studentInput = document.querySelector(".studentinput")
-
+$('.ui.basic.modal')
+.modal()
+;
 function RegisterCard(studentNr) {
   ipcRenderer.send('request', {
     name: 'register',
@@ -8,18 +10,20 @@ function RegisterCard(studentNr) {
     url:  'api/checkout/card',
     body: {
       student: studentNr,
-      uuid: 'ec3ed712' // Need to implement with nfc.
+      uuid: 'ec3ed712sss' // Need to implement with nfc.
     }
   })
 }
-
 ipcRenderer.on('register', (event, arg) => {
   if (arg !== null && arg.statusCode == 201){
-    console.log(arg)
-    $('ui.basic.modal').modal('show')
+    $('.ui.basic.modal.success')
+      .modal('show')
+    ;
   }
   else{
-    console.error(arg.err)
+    $('.ui.basic.modal.fail')
+      .modal('show')
+    ;
   }
 })
 
@@ -42,7 +46,6 @@ function validate(a, b, c) {
 
 document.querySelector(".register").addEventListener('click', function (e) {
   if (/\F\d{6}/.test(studentInput.value) || (/\d{7}/.test(studentInput.value) && validate(studentInput.value))) {
-    console.log('Registering cards');
     RegisterCard(studentInput.value);
   } else {
     $('.ui.massive.input').popup('show');

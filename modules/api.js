@@ -16,14 +16,10 @@ module.exports.Request = async (type, url, reqBody, callback) => {
       response.on('data', (data) => {
         let bufferData = Buffer.from(data);
         let res = bufferData.toString();
-        console.log(res);
-        callback(null, res);
+        callback(null, res, response.statusCode);
       });
     } else {
-      callback({
-        statusCode: response.statusCode,
-        error: response.statusMessage
-      }, null);
+      callback(response.statusMessage, null, response.statusCode);
     }
 });
 request.on('error', (error) =>{
