@@ -11,11 +11,20 @@ module.exports.Request = async (type, url, reqBody, callback) => {
   });
 
   request.on('response', (response) => {
-    response.on('data', (data) => {
-      let bufferData = Buffer.from(data);
-      let res = bufferData.toString();
-      callback(null, res);
-    });
+    // Request is only successful if status code 2XX
+    if (/^2/.test(response.statusCode)) {
+      response.on('data', (data) => {
+        let bufferData = Buffer.from(data);
+        let res = bufferData.toString();
+        console.log(res);
+        callback(null, res);
+      });
+    } else {
+      callback({
+        statusCode: response.statusCode,
+        error: response.statusMessage
+      }, null);
+    }
 });
 request.on('error', (error) =>{
   console.log(error)
