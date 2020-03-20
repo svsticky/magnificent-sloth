@@ -1,24 +1,39 @@
-const fs = require('fs');
-const path = require('path');
+const { ipcRenderer } = require('electron');
 const products = require('./products.js');
 const cart = require('./cart.js');
+const path = require('path');
+const fs = require('fs');
 let url = "products";
 
-function renderHTML(page) {
+renderHTML = page => {
   page = path.join(__dirname, page);
   const file = fs.readFileSync(page);
   document.getElementById('content').innerHTML = file;
 }
 
-function renderHomePage() {
+renderHomePage = () => {
   renderHTML(`../../views/products/products.html`);
   products.GetProducts();
   cart.ClearCart();
 }
 
+// Check balance each time we switch pages
+getUserInfo = () => {
+  let uuid = 'ec3ed712';
+  ipcRenderer.send('request', {
+    name: 'getUserInfo',
+    type: 'GET',
+    url: `api/checkout/card?uuid=${uuid}`,
+    body: null
+  });
+}
+
 document.querySelectorAll('.link').forEach((element) => {
   element.addEventListener('click', function(e) {
-    url = element.id
+    url = element.id;
+
+    getUserInfo();
+
     switch(url) {
       case "funds":
         renderHTML(`../../views/funds/funds.html`);
@@ -33,4 +48,17 @@ document.querySelectorAll('.link').forEach((element) => {
   });
 });
 
+// Render user information
+ipcRenderer.on('getUserInfo', (event, arg) => {
+  if (arg.err !== null) {
+    console.error(arg.err);
+  } else {
+    let data = JSON.parse(arg.data)
+    console.log(data);
+    document.getElementById('balance').innerHTML = `€${data.balance}`
+    document.getElementById('user').innerHTML = data.first_name
+  }
+});
+
+getUserInfo();
 renderHomePage();

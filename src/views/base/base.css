@@ -6,19 +6,26 @@ body {
 
 /* Menu */
 .menu {
-	height: 120px;
+	height: 100px;
 	margin-bottom: 0 !important;
 	background-color: #c53f78 !important;
 }
 
 .menu > span {
 	color: #f0f0f0 !important;
-	font-size: 40px;
+	font-size: 30px;
 }
 
 #userFunds {
-	font-size: 30px;
+	margin-left: auto;
+	display: block;
 	text-align: center;
+}
+
+#user {
+	font-size: 25px;
+	padding-bottom: 10px;
+	margin-top: -10px;
 }
 
 .menu > #logo {
