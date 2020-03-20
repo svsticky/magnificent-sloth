@@ -9,12 +9,8 @@ const {
 } = require('./modules/api');
 require('dotenv').config();
 
-function initialize() {
-  createWindow()
-}
 
-function createWindow() {
-
+function createWindow () {
   let win = new BrowserWindow({
     width: 1024,
     height: 768,
@@ -54,4 +50,4 @@ ipcMain.on('request', (event, arg) => {
   });
 });
 
-app.on('ready', initialize);
+app.on('ready', createWindow)

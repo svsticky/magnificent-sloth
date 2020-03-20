@@ -127,9 +127,9 @@
     defer-to-connect "^1.0.1"
 
 "@types/node@>= 8":
-  version "13.7.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.4.tgz#76c3cb3a12909510f52e5dc04a6298cdf9504ffd"
-  integrity sha512-oVeL12C6gQS/GAExndigSaLxTrKpQPxewx9bOcwfvJiJge4rr7wNaph4J+ns5hrmIV2as5qxqN8YKthn9qh0jw==
+  version "13.7.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.6.tgz#cb734a7c191472ae6a2b3a502b4dfffcea974113"
+  integrity sha512-eyK7MWD0R1HqVTp+PtwRgFeIsemzuj4gBFSQxfPHY5iMjS7474e5wq+VFgTcdpyHeNxyKSaetYAjdMLJlKoWqA==
 
 "@types/node@^12.0.12":
   version "12.12.30"
@@ -1590,9 +1590,9 @@ flush-write-stream@^1.0.2:
     readable-stream "^2.3.6"
 
 fomantic-ui@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/fomantic-ui/-/fomantic-ui-2.8.3.tgz#ead838807b3d9ce62e7d7bd4add727102f302f10"
-  integrity sha512-ki4B/cGqvWqhjSZewDLcjVjLRv77UJi1Dcfw7ZK1d8c6+kHrr8YnqfzE1MCWQjHM0CsD0CjnA+/mg3kyLuCZkw==
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/fomantic-ui/-/fomantic-ui-2.8.4.tgz#4a910ff8cf877f356c1ea9cca95540ed4bb024f7"
+  integrity sha512-We34raC+xqoaIOFFamsN8cHc+tCNy+6JWjWmkWIEjeIxZRrbXsoqto8eLFjMIPEwL1C6H0FwONqt39AmL+8zeg==
   dependencies:
     "@octokit/rest" "^16.16.0"
     better-console "1.0.1"

@@ -7,6 +7,7 @@
     "start": "./node_modules/.bin/electron-rebuild && electron ."
   },
   "devDependencies": {
+    "electron": "^8.1.1",
     "electron-rebuild": "^1.10.0"
   },
   "author": "",
