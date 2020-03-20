@@ -6,11 +6,11 @@ let cost = 0;
 // Puts the given product in the cart or increments it if
 // it's already present.
 module.exports.AddToCart = (product) => {
-  let alreadyInCart = cartList.filter(prod => prod.id === product.id);
+  let alreadyInCart = cartList.some(prod => prod.id === product.id);
   cost += Number(product.price);
   
-  if(alreadyInCart.length !== 0) {
-    let index = cartList.indexOf(alreadyInCart[0]);
+  if(alreadyInCart) {
+    let index = cartList.indexOf(product);
     cartList[index].amount++;
   } else {
     product.amount = 1;
