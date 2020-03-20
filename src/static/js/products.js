@@ -9,24 +9,22 @@ module.exports.GetProducts = () => {
   ipcRenderer.send('request', {
     name: 'getProducts',
     type: 'GET',
-    url: `api/checkout/products`,
+    url: 'api/checkout/products',
     body: null
   });
 }
 
 // When we receive the data from Koala, render these
 // through the renderProduct function.
-ipcRenderer.on('response', (event, arg) => {
-  if (arg.name === 'getProducts') {
-    if (arg.err !== null) {
-      console.error(arg.err);
-      document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
-    } else {
-      let products = JSON.parse(arg.data);
+ipcRenderer.on('getProducts', (event, arg) => {
+  if (arg.err !== null) {
+    console.error(arg.err);
+    document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
+  } else {
+    let products = JSON.parse(arg.data);
 
-      for(let i = 0; i < products.length; i++)
-        renderProduct(products[i]);
-    }
+    for(let i = 0; i < products.length; i++)
+      renderProduct(products[i]);
   }
 });
 

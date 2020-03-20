@@ -1,12 +1,13 @@
 const { net } = require('electron');
+const querystring = require('querystring');
 
-module.exports.Request = async (type, url, body, callback) => {
+module.exports.Request = async (type, url, reqBody, callback) => {
   const request = net.request({
     method: type,
     protocol: process.env.PROTOCOL,
     hostname: process.env.HOST,
     port: process.env.PORT,
-    path: url.includes('?') ? `${url}&token=${process.env.TOKEN}` : `${url}?token=${process.env.TOKEN}`
+    path: `${url}?token=${process.env.TOKEN}`
   });
 
   request.on('response', (response) => {
@@ -21,8 +22,7 @@ module.exports.Request = async (type, url, body, callback) => {
     callback(response, null);
   });
 
-  if(body !== null)
-    request.write(body);
+  request.write(querystring.encode(reqBody));
 
   request.end();
 }

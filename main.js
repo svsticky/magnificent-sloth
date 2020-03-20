@@ -20,6 +20,6 @@ app.whenReady().then(createWindow);
 
 ipcMain.on('request', (event, arg) => {
   Request(arg.type, arg.url, arg.body, (err, data) => {
-    event.sender.send('response', {name: arg.name, err: err, data: data});
+    event.sender.send(arg.name, {err: err, data: data});
   });
 });

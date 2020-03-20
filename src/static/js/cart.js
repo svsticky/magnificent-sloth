@@ -57,19 +57,20 @@ function purchase() {
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
-    url: `api/checkout/transaction?uuid=${userInfo.uuid}&items=${userInfo.items}`,
-    body: null
+    url: `api/checkout/transaction`,
+    body: {
+      uuid: userInfo.uuid,
+      items: userInfo.items
+    }
   });
 }
 
 // Handle purchase response
-ipcRenderer.on('response', (event, arg) => {
-  if (arg.name === 'purchase') {
-    if (arg.err !== null) {
-      console.error(arg.err);
-    } else {
-      console.log('Purchase successful');
-      module.exports.ClearCart();
-    }
+ipcRenderer.on('purchase', (event, arg) => {
+  if (arg.err !== null) {
+    console.error(arg.err);
+  } else {
+    console.log('Purchase successful');
+    module.exports.ClearCart();
   }
 });
