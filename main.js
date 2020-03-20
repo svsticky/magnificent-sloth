@@ -43,7 +43,7 @@ function createWindow () {
 
 ipcMain.on('request', (event, arg) => {
   Request(arg.type, arg.url, arg.body, (err, data) => {
-    event.sender.send(arg.name, {
+    event.reply(arg.name, {
       err: err,
       data: data
     });
