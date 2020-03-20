@@ -7,7 +7,7 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     protocol: process.env.PROTOCOL,
     hostname: process.env.HOST,
     port: process.env.PORT,
-    path: `${url}?token=${process.env.TOKEN}`
+    path: url.includes('?') ? `${url}&token=${process.env.TOKEN}` : `${url}?token=${process.env.TOKEN}`
   });
 
   request.on('response', (response) => {
