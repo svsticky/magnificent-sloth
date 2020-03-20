@@ -70,7 +70,9 @@ ipcRenderer.on('purchase', (event, arg) => {
   if (arg.err !== null) {
     console.error(arg.err);
   } else {
-    console.log('Purchase successful');
+    let res = JSON.parse(arg.data);
+    let newBalance = (res.balance - cost).toFixed(2);
+    document.getElementById('balance').innerHTML = `€${newBalance}`
     module.exports.ClearCart();
   }
 });
