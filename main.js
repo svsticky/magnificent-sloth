@@ -39,13 +39,11 @@ function createWindow () {
 }
 
 ipcMain.on('request', (event, arg) => {
-  Request(arg.type, arg.url, arg.body, (err, data) => {
-    console.log(err)
-    console.log(data)
-
+  Request(arg.type, arg.url, arg.body, (err, data, statuscode) => {
     event.reply(arg.name, {
       err: err,
-      data: data
+      data: data,
+      statusCode: statuscode
     });
   });
 });

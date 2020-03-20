@@ -8,6 +8,26 @@
 </head>
 
 <body>
+  <div class="ui basic modal success">
+    <div class="header">Success!</div>
+    <div class="content">
+      <p>Card has been registered! check your mail to confirm</p>
+    </div>
+    <div class="actions">
+      <div class="ui approve button">Approve</div>
+    </div>
+  </div>
+  <div class="ui basic modal fail">
+    <div class="header">Error!</div>
+    <div class="content">
+      <p>Something went wrong!</p>
+    </div>
+    <div class="actions">
+      <div class="ui approve button">Approve</div>
+    </div>
+  </div>
+  
+
 <h1 id='title'>Laat je kaart op de reader liggen 
   en vul je Studentennummer in</h1>
 <div id="input" class="ui massive input" data-content="Studentennummer is niet geldig" data-position="right center">
@@ -67,15 +87,6 @@
   </div>
 </div>
 
-<div class="ui modal">
-  <div class="header">Succes!</div>
-  <div class="content">
-    <p>Card has been registered! check your mail to confirm</p>
-  </div>
-  <div class="actions">
-    <div class="ui approve button">Approve</div>
-  </div>
-</div>
 
 <script>
   window.$ = window.jQuery = require('jquery');
