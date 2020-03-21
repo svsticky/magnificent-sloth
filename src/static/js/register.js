@@ -1,13 +1,17 @@
-const { ipcRenderer } = require('electron')
+const {
+  ipcRenderer
+} = require('electron')
 const studentInput = document.querySelector(".studentinput")
+const popup = document.getElementById("popup")
 $('.ui.basic.modal')
-.modal()
-;
+  .modal();
+
+
 function RegisterCard(studentNr) {
   ipcRenderer.send('request', {
     name: 'register',
     type: 'POST',
-    url:  'api/checkout/card',
+    url: 'api/checkout/card',
     body: {
       student: studentNr,
       uuid: 'ec3ed712sss' // Need to implement with nfc.
@@ -15,15 +19,32 @@ function RegisterCard(studentNr) {
   })
 }
 ipcRenderer.on('register', (event, arg) => {
-  if (arg !== null && arg.statusCode == 201){
-    $('.ui.basic.modal.success')
-      .modal('show')
-    ;
-  }
-  else{
-    $('.ui.basic.modal.fail')
-      .modal('show')
-    ;
+
+  if (arg !== null && arg.statusCode == 201) {
+    $('.ui.basic.modal').modal({onHidden: function(){
+      ipcRenderer.send("register-finished")
+    }})
+      .modal('show');
+
+  } else if (arg.statusCode == 404) {
+    $('body')
+      .toast({
+        class: 'error',
+        message: 'Studentid could not be found.'
+      })
+  } else if (arg.statusCode == 409) {
+    $('body')
+      .toast({
+        class: 'error',
+        message: 'Card has already been registered.'
+      })
+  } else {
+    console.log(arg.statusCode)
+    $('body')
+      .toast({
+        class: 'massive error',
+        message: 'Something went wrong.'
+      })
   }
 })
 
@@ -41,7 +62,7 @@ document.querySelector(".undo").addEventListener('click', function (e) {
 function validate(a, b, c) {
   b = 0;
   for (c in a) b += a[c] * (c % 2 ? 3 : 1);
-    return !(b % 6)
+  return !(b % 6)
 }
 
 document.querySelector(".register").addEventListener('click', function (e) {

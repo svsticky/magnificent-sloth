@@ -36,8 +36,11 @@ function createWindow() {
   globalShortcut.register('Ctrl+3', () => {
     win.loadFile('src/views/register/register.html')
   })
-
+  ipcMain.on('register-finished', (event,arg) =>{
+    win.loadFile('src/views/idle/idle.html')
+  })
 }
+  
 
 ipcMain.on('request', (event, arg) => {
   Request(arg.type, arg.url, arg.body, (err, data, statuscode) => {
@@ -49,4 +52,5 @@ ipcMain.on('request', (event, arg) => {
   });
 });
 
-app.on('ready', initialize);
+
+app.on('ready', createWindow)

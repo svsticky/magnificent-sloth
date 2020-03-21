@@ -23,7 +23,7 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     }
 });
 request.on('error', (error) =>{
-  console.log(error)
+  callback(error,null,null)
 })
 
 

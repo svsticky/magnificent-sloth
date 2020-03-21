@@ -1,98 +1,90 @@
 <!DOCTYPE html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-<link rel="stylesheet" type="text/css" href="../../../src/static/semantic/dist/semantic.min.css">
-<link rel="stylesheet" type="text/css" href="./register.css">
+  <link rel="stylesheet" type="text/css" href="../../../src/static/semantic/dist/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="./register.css">
 </head>
 
 <body>
-  <div class="ui basic modal success">
-    <div class="header">Success!</div>
-    <div class="content">
-      <p>Card has been registered! check your mail to confirm</p>
-    </div>
-    <div class="actions">
-      <div class="ui approve button">Approve</div>
+  <div class="ui basic modal">
+    <div id="popup" class="ui icon header">
+      <i class="green check icon"></i>
+      <p>Card has been registered! Check your mail for confirmation</p>
     </div>
   </div>
-  <div class="ui basic modal fail">
-    <div class="header">Error!</div>
-    <div class="content">
-      <p>Something went wrong!</p>
+
+
+  <h1 id='title'>Laat je kaart op de reader liggen
+    en vul je Studentennummer in</h1>
+
+  <div class="ui form">
+    <div id="input" class="ui massive input" data-content="Studentennummer is niet geldig" data-position="right center">
+      <input type="text" class="studentinput" placeholder="Studentennummer">
+    </div>  
+    <div class="keypad">
+
+      <div value='1' class="key massive ui button">
+        1
+      </div>
+
+      <div value="2" class="key massive ui button">
+        2
+      </div>
+
+      <div value="3" class="key massive ui button">
+        3
+      </div>
+
+      <div value="4" class="key massive ui button">
+        4
+      </div>
+
+      <div value="5" class="key massive ui button">
+        5
+      </div>
+
+      <div value="6" class="key massive ui button">
+        6
+      </div>
+
+      <div value="7" class="key massive ui button">
+        7
+      </div>
+
+      <div value="8" class="key massive ui button">
+        8
+      </div>
+
+      <div value="9" class="key massive ui button">
+        9
+      </div>
+      <div class="undo massive ui icon button">
+        <i class="arrow left icon"></i>
+      </div>
+      <div value="0" class="key massive ui button">
+        0
+      </div>
+      <div value="F" class="key massive ui button">
+        F
+      </div>
     </div>
-    <div class="actions">
-      <div class="ui approve button">Approve</div>
+    <div class="actions keyrow">
+      <div value="10" class="register massive ui icon button">
+        Register
+      </div>
     </div>
   </div>
-  
-
-<h1 id='title'>Laat je kaart op de reader liggen 
-  en vul je Studentennummer in</h1>
-<div id="input" class="ui massive input" data-content="Studentennummer is niet geldig" data-position="right center">
-    <input type="text" class="studentinput" placeholder="Studentennummer">
-</div>
-<div class="keypad">
-
-    <div value='1' class="key massive ui button">
-      1
-    </div>
-
-    <div value="2" class="key massive ui button">
-      2
-    </div>
-
-    <div value="3" class="key massive ui button">
-      3
-    </div>
-
-    <div value="4" class="key massive ui button">
-      4
-    </div>
-
-    <div value="5" class="key massive ui button">
-      5
-    </div>
-
-    <div value="6" class="key massive ui button">
-      6
-    </div>
-
-    <div value="7" class="key massive ui button">
-      7
-    </div>
-
-    <div value="8" class="key massive ui button">
-      8
-    </div>
-
-    <div value="9" class="key massive ui button">
-      9
-    </div>
-    <div class="undo massive ui icon button">
-      <i class="arrow left icon"></i>
-    </div>
-    <div value="0" class="key massive ui button">
-      0
-    </div>
-    <div value="F" class="key massive ui button">
-      F
-    </div>
   </div>
-  <div class="actions keyrow">
-    <div value="10" class="register massive ui icon button">
-      Register
-    </div>
-  </div>
-</div>
 
 
-<script>
-  window.$ = window.jQuery = require('jquery');
-  require('../../../src/static/semantic/dist/semantic.min.js');
-  require('../../static/js/register');
-  
-</script>
+  <script>
+    window.$ = window.jQuery = require('jquery');
+    require('../../../src/static/semantic/dist/semantic.min.js');
+    require('../../static/js/register');
+  </script>
 </body>
+
 </html>
