@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron');
 const studentInput = document.querySelector(".studentinput");
 
-// ???
+// Init the div as a modal
 $('.ui.basic.modal')
   .modal();
 
@@ -12,12 +12,13 @@ function RegisterCard(studentNr) {
     url: 'api/checkout/card',
     body: {
       student: studentNr,
-      uuid: 'ec3ed712' // Need to implement with nfc.
+      uuid: 'ec3ed712s' // Need to implement with nfc.
     }
   })
 }
 
 ipcRenderer.on('register', (event, arg) => {
+  console.log(arg)
   if (arg !== null && arg.statusCode == 201) {
     // On success
     $('.ui.basic.modal').modal({onHidden: function(){
