@@ -1,14 +1,6 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  globalShortcut
-} = require('electron');
-const {
-  Request
-} = require('./modules/api');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
+const { Request } = require('./modules/api');
 require('dotenv').config();
-
 
 function createWindow () {
   let win = new BrowserWindow({
@@ -21,25 +13,26 @@ function createWindow () {
 
   win.removeMenu();
   win.webContents.openDevTools();
-  win.loadFile('src/views/base/base.html');
+  win.loadFile('src/views/base/idle.html');
+
+  // Switch back to idle if register finished
+  ipcMain.on('register-finished', (event,arg) =>{
+    win.loadFile('src/views/idle/idle.html')
+  });
 
   // For development purposes
   globalShortcut.register('Ctrl+1', () => {
     win.loadFile('src/views/base/base.html')
-  })
+  });
 
   globalShortcut.register('Ctrl+2', () => {
-    win.loadFile('src/views/base/base.html')
-  })
+    win.loadFile('src/views/idle/idle.html')
+  });
 
   globalShortcut.register('Ctrl+3', () => {
     win.loadFile('src/views/register/register.html')
-  })
-  ipcMain.on('register-finished', (event,arg) =>{
-    win.loadFile('src/views/idle/idle.html')
-  })
+  });
 }
-  
 
 ipcMain.on('request', (event, arg) => {
   Request(arg.type, arg.url, arg.body, (err, data, statuscode) => {
@@ -50,6 +43,5 @@ ipcMain.on('request', (event, arg) => {
     });
   });
 });
-
 
 app.on('ready', createWindow)

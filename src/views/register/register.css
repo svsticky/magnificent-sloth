@@ -2,32 +2,33 @@ body {
 	background-color: #c53f78;
 }
 #title {
-    position: relative;
-    padding-top: 10%;
-    text-align: center;
-    color: #ffffff;
-    font-size: 50px;
+  position: relative;
+  padding-top: 10%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 50px;
 }
 #input {
-    position: relative;
-    display: block;
-    margin: auto;
-    width: 30%;
+  position: relative;
+  display: block;
+  margin: auto;
+  width: 30%;
 }
 .keypad {
-    width: 30%;
-    padding-top:2%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto auto ; 
-    gap: 1.5% 0%;
+  width: 30%;
+  padding-top:2%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto auto ; 
+  gap: 1.5% 0%;
 }   
 
 .actions{
-    text-align: center;
-    margin-top: 3%;
+  text-align: center;
+  margin-top: 3%;
 }
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 

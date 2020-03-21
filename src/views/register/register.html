@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
@@ -7,7 +6,6 @@
   <link rel="stylesheet" type="text/css" href="../../../src/static/semantic/dist/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="./register.css">
 </head>
-
 <body>
   <div class="ui basic modal">
     <div id="popup" class="ui icon header">
@@ -16,69 +14,71 @@
     </div>
   </div>
 
-
-  <h1 id='title'>Laat je kaart op de reader liggen
-    en vul je Studentennummer in</h1>
+  <h1 id='title'>
+    Laat je kaart op de reader liggen en vul je Studentennummer in
+  </h1>
 
   <div class="ui form">
     <div id="input" class="ui massive input" data-content="Studentennummer is niet geldig" data-position="right center">
       <input type="text" class="studentinput" placeholder="Studentennummer">
-    </div>  
-    <div class="keypad">
-
-      <div value='1' class="key massive ui button">
-        1
-      </div>
-
-      <div value="2" class="key massive ui button">
-        2
-      </div>
-
-      <div value="3" class="key massive ui button">
-        3
-      </div>
-
-      <div value="4" class="key massive ui button">
-        4
-      </div>
-
-      <div value="5" class="key massive ui button">
-        5
-      </div>
-
-      <div value="6" class="key massive ui button">
-        6
-      </div>
-
-      <div value="7" class="key massive ui button">
-        7
-      </div>
-
-      <div value="8" class="key massive ui button">
-        8
-      </div>
-
-      <div value="9" class="key massive ui button">
-        9
-      </div>
-      <div class="undo massive ui icon button">
-        <i class="arrow left icon"></i>
-      </div>
-      <div value="0" class="key massive ui button">
-        0
-      </div>
-      <div value="F" class="key massive ui button">
-        F
-      </div>
     </div>
+
+    <article class="keypad">
+      <section value='1' class="key massive ui button">
+        1
+      </section>
+
+      <section value="2" class="key massive ui button">
+        2
+      </section>
+
+      <section value="3" class="key massive ui button">
+        3
+      </section>
+
+      <section value="4" class="key massive ui button">
+        4
+      </section>
+
+      <section value="5" class="key massive ui button">
+        5
+      </section>
+
+      <section value="6" class="key massive ui button">
+        6
+      </section>
+
+      <section value="7" class="key massive ui button">
+        7
+      </section>
+
+      <section value="8" class="key massive ui button">
+        8
+      </section>
+
+      <section value="9" class="key massive ui button">
+        9
+      </section>
+
+      <section class="undo massive ui icon button">
+        <i class="arrow left icon"></i>
+      </section>
+
+      <section value="0" class="key massive ui button">
+        0
+      </section>
+
+      <section value="F" class="key massive ui button">
+        F
+      </section>
+    </article>
+    
     <div class="actions keyrow">
       <div value="10" class="register massive ui icon button">
         Register
       </div>
     </div>
   </div>
-  </div>
-
 
   <script>
     window.$ = window.jQuery = require('jquery');
@@ -86,5 +86,4 @@
     require('../../static/js/register');
   </script>
 </body>
-
 </html>

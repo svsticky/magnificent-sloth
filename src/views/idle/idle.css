@@ -1,12 +1,12 @@
 body {
-	background-color: #c53f78;
+  background-color: #c53f78;
 }
 
 #logo {
-    display: block;
+  display: block;
 }
 #description{
-    text-align: center;
-    color: #ffffff;
-    font-size: 50px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 50px;
 }

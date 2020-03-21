@@ -21,13 +21,13 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     } else {
       callback(response.statusMessage, null, response.statusCode);
     }
-});
-request.on('error', (error) =>{
-  callback(error,null,null)
-})
+  });
+  
+  request.on('error', (error) =>{
+    callback(error,null,null)
+  })
 
+  request.write(querystring.encode(reqBody));
 
-request.write(querystring.encode(reqBody));
-
-request.end();
+  request.end();
 }
