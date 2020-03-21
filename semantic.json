@@ -1,5 +1,5 @@
 {
-  "base": "src/static/semantic/",
+  "base": "src/static/semantic",
   "paths": {
     "source": {
       "config": "src/theme.config",

@@ -10,8 +10,7 @@ const {
 require('dotenv').config();
 
 
-function createWindow() {
-
+function createWindow () {
   let win = new BrowserWindow({
     width: 1024,
     height: 768,
