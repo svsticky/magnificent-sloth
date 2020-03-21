@@ -22,11 +22,11 @@ function createWindow() {
 
   win.removeMenu();
   win.webContents.openDevTools();
-  win.loadFile('src/views/idle/idle.html');
+  win.loadFile('src/views/base/base.html');
 
   // For development purposes
   globalShortcut.register('Ctrl+1', () => {
-    win.loadFile('src/views/idle/idle.html')
+    win.loadFile('src/views/base/base.html')
   })
 
   globalShortcut.register('Ctrl+2', () => {
