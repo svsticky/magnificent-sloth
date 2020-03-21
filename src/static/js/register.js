@@ -63,10 +63,13 @@ document.querySelector(".undo").addEventListener('click', function (e) {
 });
 
 //Validates studentnumber it works the same as ISBN-10/13 but with with 7
-function validate(a, b, c) {
-  b = 0;
-  for (c in a) b += a[c] * (c % 2 ? 3 : 1);
-  return !(b % 6)
+function validate(input,i,sum=0){
+  for(i = 0; i < input.length; i++){
+        
+    sum += parseInt(input[i]) * (input.length - i);
+  }
+  console.log(sum%11)
+  return (sum % 11) == 0
 }
 
 // Register button
