@@ -6,12 +6,11 @@ let cost = 0;
 // Puts the given product in the cart or increments it if
 // it's already present.
 module.exports.AddToCart = (product) => {
-  let alreadyInCart = cartList.some(prod => prod.id === product.id);
+  let alreadyInCart = cartList.findIndex(prod => prod.id == product.id);
   cost += Number(product.price);
   
-  if(alreadyInCart) {
-    let index = cartList.indexOf(product);
-    cartList[index].amount++;
+  if(alreadyInCart>-1) {
+    cartList[alreadyInCart].amount++;
   } else {
     product.amount = 1;
     cartList.push(product);
@@ -43,7 +42,7 @@ module.exports.ClearCart = () => {
 // to handle the payment for us.
 function purchase() {
   let userInfo = {
-    uuid: 'ec3ed712', // Test ID
+    uuid: 'uid', // Test ID
     items: ''
   }
 
@@ -71,7 +70,7 @@ ipcRenderer.on('purchase', (event, arg) => {
     console.error(arg.err);
   } else {
     let res = JSON.parse(arg.data);
-    let newBalance = (res.balance - cost).toFixed(2);
+    let newBalance = (res.balance).toFixed(2);
     document.getElementById('balance').innerHTML = `€${newBalance}`
     module.exports.ClearCart();
   }
