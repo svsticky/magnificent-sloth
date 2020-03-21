@@ -70,7 +70,7 @@ ipcRenderer.on('purchase', (event, arg) => {
     console.error(arg.err);
   } else {
     let res = JSON.parse(arg.data);
-    let newBalance = (res.balance).toFixed(2);
+    let newBalance = parseFloat(res.balance).toFixed(2);
     document.getElementById('balance').innerHTML = `€${newBalance}`
     module.exports.ClearCart();
   }
