@@ -4,17 +4,19 @@
   "description": "Point of Sale for Dead Mongoose",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "./node_modules/.bin/electron-rebuild && electron ."
   },
   "devDependencies": {
-    "electron": "^8.0.1"
+    "electron-rebuild": "^1.10.0"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "electron": "^8.1.1",
     "fomantic-ui": "^2.8.3",
     "global": "^4.4.0",
+    "jquery": "^3.4.1",
     "jslint": "^0.12.1"
   }
 }

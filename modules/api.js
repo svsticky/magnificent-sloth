@@ -11,16 +11,21 @@ module.exports.Request = async (type, url, reqBody, callback) => {
   });
 
   request.on('response', (response) => {
-    response.on('data', data => {
-      let bufferData = Buffer.from(data);
-      let res = bufferData.toString();
-      callback(null, res);
-    });
+    // Request is only successful if status code 2XX
+    if (/^2/.test(response.statusCode)) {
+      response.on('data', (data) => {
+        let bufferData = Buffer.from(data);
+        let res = bufferData.toString();
+        callback(null, res, response.statusCode);
+      });
+    } else {
+      callback(response.statusMessage, null, response.statusCode);
+    }
   });
-
-  request.on('error', (response) => {
-    callback(response, null);
-  });
+  
+  request.on('error', (error) =>{
+    callback(error,null,null)
+  })
 
   request.write(querystring.encode(reqBody));
 
