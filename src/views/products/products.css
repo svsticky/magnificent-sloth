@@ -11,6 +11,12 @@
 
 #cartTitle {
   font-size: 24px;
+  margin: 0;
+}
+
+.cartItem {
+  border-bottom: 1px solid #c3c3c3;
+  padding: 10px 0;
 }
 
 #productName {

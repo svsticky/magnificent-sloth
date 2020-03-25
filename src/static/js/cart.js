@@ -9,11 +9,20 @@ module.exports.AddToCart = (product) => {
   let alreadyInCart = cartList.findIndex(prod => prod.id == product.id);
   cost += Number(product.price);
   
-  if(alreadyInCart>-1) {
+  if(alreadyInCart > -1) {
     cartList[alreadyInCart].amount++;
   } else {
     product.amount = 1;
     cartList.push(product);
+  }
+  module.exports.RenderCart();
+}
+
+RemoveFromCart = (index) => {
+  if (cartList[index].amount > 1) {
+    cartList[index].amount--;
+  } else {
+    cartList.splice(index, 1);
   }
   module.exports.RenderCart();
 }
@@ -26,6 +35,10 @@ module.exports.RenderCart = () => {
   for(let i = 0; i < cartList.length; i++) {
     let cartElement = document.createElement('p');
     cartElement.innerHTML = `${cartList[i].amount}x - ${cartList[i].name}`
+    cartElement.className = "cartItem";
+    cartElement.addEventListener("touchstart", () => RemoveFromCart(i));
+    cartElement.addEventListener("click", () => RemoveFromCart(i));
+
     document.getElementById('cartList').append(cartElement);
   }
   document.getElementById('totalCost').innerHTML = `€${Number(cost).toFixed(2)}`;
