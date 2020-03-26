@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
 
+let uuid = "ec3ed712";
+
 module.exports.GetProducts = () => {
   // Define the API request we have to do to get all the items
   // from Koala.
@@ -17,7 +19,7 @@ module.exports.GetProducts = () => {
   ipcRenderer.send('request',{
     name: 'recent',
     type: 'GET',
-    url: 'api/checkout/recent?uuid=uidempty',
+    url: `api/checkout/recent?uuid=${uuid}`,
   })
 }
 
@@ -48,7 +50,7 @@ ipcRenderer.on('recent', (event, arg) => {
 })
 
 // Renders the block for each product.
-function renderProduct(prod, recent=false) {
+function renderProduct(prod, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
@@ -63,5 +65,5 @@ function renderProduct(prod, recent=false) {
   html.addEventListener("touchstart", () => {AddToCart(prod)});
   html.addEventListener("click", () => {AddToCart(prod)});
 
-  document.getElementById(recent ? 'recentList' : 'productList').append(html);
+  document.getElementById(recent ? 'recentList' : prod.category).append(html);
 }

@@ -55,7 +55,7 @@ module.exports.ClearCart = () => {
 // to handle the payment for us.
 function purchase() {
   let userInfo = {
-    uuid: 'uid', // Test ID
+    uuid: 'ec3ed712', // Test ID
     items: ''
   }
 
