@@ -19,6 +19,8 @@ module.exports.AddToCart = (product) => {
 }
 
 RemoveFromCart = (index) => {
+  cost -= Number(cartList[index].price);
+  
   if (cartList[index].amount > 1) {
     cartList[index].amount--;
   } else {
@@ -41,7 +43,15 @@ module.exports.RenderCart = () => {
 
     document.getElementById('cartList').append(cartElement);
   }
-  document.getElementById('totalCost').innerHTML = `€${Number(cost).toFixed(2)}`;
+  
+  let finalCost = Math.abs(Number(cost)).toFixed(2)
+  document.getElementById('totalCost').innerHTML = `Cost: €${finalCost}`;
+  if (finalCost > 0) {
+    let balance = parseInt(document.getElementById('balance').innerHTML.substr(1)) || 0;
+    document.getElementById('newBalance').innerHTML = `New balance: €${Number(balance - finalCost).toFixed(2)}`;
+  } else {
+    document.getElementById('newBalance').innerHTML = null;
+  }
   document.getElementById('purchase').addEventListener('click', purchase)
 }
 
