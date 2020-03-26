@@ -34,6 +34,12 @@ ipcRenderer.on('getProducts', (event, arg) => {
 
     for(let i = 0; i < products.length; i++)
       renderProduct(products[i]);
+
+    let date = new Date();
+    if (date.getHours() < 17) {
+      document.getElementById("alcoholText").style.display = "none";
+      document.getElementById("liquor").style.display = "none";
+    }
   }
 });
 ipcRenderer.on('recent', (event, arg) => {
