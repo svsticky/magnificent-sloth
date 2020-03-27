@@ -1,9 +1,6 @@
 #productList {
   width: calc(100% - 200px);
 }
-#recentList {
-  width: calc(100% - 200px);
-}
 
 #purchase {
   width: 100%;
