@@ -1,11 +1,3 @@
 node_modules
-src/static/semantic/dist/*
-src/static/semantic/gulpfile.js
-src/static/semantic/src/definitions
-src/static/semantic/src/semantic.less
-src/static/semantic/src/theme.less
-src/static/semantic/src/themes
-src/static/semantic/tasks
-!src/static/semantic/dist/semantic.min.css
-!src/static/semantic/dist/semantic.min.js
+src/semantic/dist
 .env
