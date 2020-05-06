@@ -4,7 +4,7 @@ Point of Sale for Dead Mongoose
 ### How to install
 
 #### Prerequisites
-To install the package locally, you first have to install `nvm`. Instructions can be found [here](https://github.com/nvm-sh/nvm)
+To install the package locally, you first have to install `nvm`. Instructions can be found [here](https://github.com/nvm-sh/nvm#installing-and-updating)
 Make sure you install at least the latest LTS release.
 
 #### Install locally
