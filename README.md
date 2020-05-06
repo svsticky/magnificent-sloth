@@ -18,3 +18,10 @@ Make sure you install at least the latest LTS release.
 #### Update semantic-ui
 If changes are made to files in the semantic folder, these changes will become active only after you run the following command:
 `npm run build-semantic`.
+
+#### Build application
+The repository supports building a deb-package to be able to install the app on debian/ubuntu machines (or any derivatives). To create the deb-package, run the following command:
+
+`npm run build`
+
+The deb-package can be found in dist/installers.
