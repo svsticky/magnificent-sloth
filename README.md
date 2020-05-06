@@ -11,7 +11,7 @@ Make sure you install at least the latest LTS release.
 1. Clone the repo to a directory of your choice.
 1. Enter the directory: `cd /path/to/your/directory`.
 1. Run `npm i`. This will use nvm that you've installed before.
-1. Copy over `sample.env` and name it `.env`. 
+1. Copy over `sample.env` and name it `.env`: `cp sample.env .env` 
 1. To update the values in `.env`, simply enter the file using your favorite editor, e.g. `nano .env`.
 1. Start the application with `npm start`.
 
