@@ -4,7 +4,8 @@
   "description": "Point of Sale for Dead Mongoose",
   "main": "main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron-rebuild && electron ."
+    "start": "./node_modules/.bin/electron-rebuild && electron .",
+    "build-semantic": "cd ./src/semantic && npx gulp build"
   },
   "devDependencies": {
     "electron-rebuild": "^1.10.0"

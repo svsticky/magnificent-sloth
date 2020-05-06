@@ -2,8 +2,18 @@
 Point of Sale for Dead Mongoose
 
 ### How to install
-1. Clone the repo
-1. Run `yarn install`
-1. Run `npx gulp build` in `src/static/semantic`
-1. Copy over `sample.env` and name it `.env`. Update the values if you have to
-1. Start the application with `yarn start` or `electron .`
+
+#### Prerequisites
+To install the package locally, you first have to install `nvm`. Instructions can be found [here](https://github.com/nvm-sh/nvm)
+
+#### Install locally
+1. Clone the repo to a directory of your choice.
+1. Enter the directory: `cd /path/to/your/directory`.
+1. Run `npm i`. This will use nvm that you've installed before.
+1. Copy over `sample.env` and name it `.env`. 
+1. To update the values in `.env`, simply enter the file using your favorite editor, e.g. `nano .env`.
+1. Start the application with `npm start`.
+
+#### Update semantic-ui
+If changes are made to files in the semantic folder, these changes will become active only after you run the following command:
+`npm run build-semantic`.
