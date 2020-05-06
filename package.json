@@ -5,16 +5,19 @@
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron-rebuild && electron .",
-    "build-semantic": "cd ./src/semantic && npx gulp build"
+    "build-semantic": "cd ./src/semantic && npx gulp build",
+    "build": "electron-packager . magnificent-sloth --platform=linux --arch=x64 --out dist && electron-installer-debian --src dist/magnificent-sloth-linux-x64/ --dest dist/installers/ --arch amd64"
   },
   "devDependencies": {
+    "electron": "^8.1.1",
+    "electron-installer-debian": "^3.0.0",
+    "electron-packager": "^14.2.1",
     "electron-rebuild": "^1.10.0"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "electron": "^8.1.1",
     "fomantic-ui": "^2.8.3",
     "global": "^4.4.0",
     "jquery": "^3.4.1",
