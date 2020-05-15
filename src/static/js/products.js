@@ -9,10 +9,6 @@ module.exports.GetProducts = () => {
   // Define the API request we have to do to get all the items
   // from Koala.
 
-  console.log(process.cwd());
-  console.log(process.env.HOST);
-  console.log(process.env.PORT);
-
   ipcRenderer.send('request', {
     name: 'getProducts',
     type: 'GET',

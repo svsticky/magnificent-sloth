@@ -4,7 +4,7 @@ Point of Sale for Dead Mongoose
 ### How to install
 
 #### Prerequisites
-To install the package locally, you first have to install `nvm`. Instructions can be found [here](https://github.com/nvm-sh/nvm#installing-and-updating)
+To install the package locally, you first have to install `nvm`. Instructions can be found [here](https://github.com/nvm-sh/nvm#installing-and-updating).
 Make sure you install at least the latest LTS release.
 
 #### Install locally
@@ -26,4 +26,4 @@ The repository supports building a deb-package to be able to install the app on 
 
 The deb-package can be found in dist/installers.
 
-When the deb-package is installed and opened via gnome, the application expects the environment file to be in `/home/$USERNAME`. Make sure you copy `sample.env` to this location and update its values.
+When the deb-package is installed and opened via gnome, the application expects the environment file to be in `/home/$USERNAME`. Make sure you copy `sample.env` to this location, rename it to `.env`, and update its values.
