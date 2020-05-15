@@ -36,10 +36,10 @@ document.querySelectorAll('.link').forEach((element) => {
 
     switch (url) {
       case "funds":
-        renderHTML(`../../views/funds/funds.html`, { query: { "uuid": JSON.stringify(uuid) } });
+        renderHTML(`../../views/funds/funds.html`, {query: {"uuid": JSON.stringify(uuid)}});
         break;
       case "activities":
-        renderHTML(`../../views/activities/activities.html`, { query: { "uuid": JSON.stringify(uuid) } });
+        renderHTML(`../../views/activities/activities.html`, {query: {"uuid": JSON.stringify(uuid)}});
         break;
       default:
         renderHomePage();

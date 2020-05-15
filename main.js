@@ -47,7 +47,6 @@ function createWindow() {
       }
 
       await Request('GET', `api/checkout/card?uuid=${uuid}`, null, (err, data, statuscode) => {
-        
         if (statuscode == 404){
           win.loadFile(`src/views/register/register.html`, {query: {"uuid": JSON.stringify(uuid)}}) // load the dashboard
         }
