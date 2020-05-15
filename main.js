@@ -1,8 +1,16 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
-const { Request } = require('./modules/api');
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut
+} = require('electron');
+const {
+  Request
+} = require('./modules/api');
 require('dotenv').config('.env');
+const { NFC } = require('nfc-pcsc');
 
-function createWindow () {
+function createWindow() {
   let win = new BrowserWindow({
     width: 1024,
     height: 768,
@@ -17,9 +25,53 @@ function createWindow () {
   win.loadFile('src/views/idle/idle.html');
 
   // Switch back to idle if register finished
-  ipcMain.on('register-finished', (event,arg) =>{
+  ipcMain.on('register-finished', (event, arg) => {
     win.loadFile('src/views/idle/idle.html')
   });
+
+  const nfc = new NFC();
+  nfc.on('reader', reader => {
+    reader.on('card', async card => {
+      let uuid = card.uid
+      await Request('GET', `api/checkout/card?uuid=${uuid}`, null, (err, data, statuscode) => {
+
+        if (statuscode == 404){
+          win.loadFile(`src/views/register/register.html`, {query: {"uuid": JSON.stringify(uuid)}}) // load the dashboard
+        }
+        else if (statuscode == 401){
+          // not activated pop up
+        }
+        else{
+          win.loadFile(`src/views/base/base.html`, {query: {"uuid": JSON.stringify(uuid)}}) // load the dashboard
+        }
+      });
+    });
+    reader.on('card.off', card => {
+      win.loadFile('src/views/idle/idle.html')
+    });
+    //TODO: Clear basket and any occurring actions for 'error', 'end' and 'error'
+    reader.on('error', err => {
+      console.error('reader error', err);
+      win.loadFile('src/views/idle/idle.html')
+      // clear any occuring activities 
+    });
+    reader.on('end', () => {
+      console.log(reader.name + ' reader disconnected.');
+      win.loadFile('src/views/idle/idle.html')
+      // clear any ocurring activities and go back to mainpage
+      
+    });
+  });
+  nfc.on('error', err => {
+    console.log('hnnggg')
+    console.error(err);
+    win.loadFile('src/views/idle/idle.html')
+
+  });
+
+
+
+
 
   // For development purposes
   globalShortcut.register('Ctrl+1', () => {

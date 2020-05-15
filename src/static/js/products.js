@@ -2,8 +2,7 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
-
-let uuid = "84063f34";
+const querystring = require('querystring');
 
 module.exports.GetProducts = () => {
   // Define the API request we have to do to get all the items
@@ -15,7 +14,7 @@ module.exports.GetProducts = () => {
     body: null
   });
 
-  ipcRenderer.send('request',{
+  ipcRenderer.send('request', {
     name: 'recent',
     type: 'GET',
     url: `api/checkout/recent?uuid=${uuid}`,
@@ -31,7 +30,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
   } else {
     let products = JSON.parse(arg.data);
 
-    for(let i = 0; i < products.length; i++)
+    for (let i = 0; i < products.length; i++)
       renderProduct(products[i]);
 
     let date = new Date();
@@ -43,14 +42,14 @@ ipcRenderer.on('getProducts', (event, arg) => {
 });
 
 ipcRenderer.on('recent', (event, arg) => {
-  if (arg.err !== null){
+  if (arg.err !== null) {
     console.error(arg.err);
     document.getElementById('recentList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
-  } else{
+  } else {
     let products = JSON.parse(arg.data);
     if (products.length == 0) document.getElementById('recent').remove()
-    for(let i = 0; i< products.length; i++){
-      renderProduct(products[i],true)
+    for (let i = 0; i < products.length; i++) {
+      renderProduct(products[i], true)
     }
   }
 })
@@ -66,9 +65,12 @@ function renderProduct(prod, recent = false) {
   html.getElementsByClassName('name')[0].innerHTML = prod.name
   html.getElementsByClassName('category')[0].innerHTML = prod.category.charAt(0).toUpperCase() + prod.category.slice(1)
   html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
-  if(prod.image)
+  if (prod.image)
     html.getElementsByClassName('productImage')[0].src = prod.image
-  html.addEventListener("click", () => {AddToCart(prod)});
+  html.addEventListener("click", () => { AddToCart(prod) });
 
   document.getElementById(recent ? 'recentList' : prod.category).append(html);
 }
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);
