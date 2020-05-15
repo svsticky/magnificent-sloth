@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const querystring = require('querystring');
 const products = require('./products.js');
 const cart = require('./cart.js');
 const path = require('path');
@@ -12,14 +13,13 @@ renderHTML = page => {
 }
 
 renderHomePage = () => {
-  renderHTML(`../../views/products/products.html`);
+  renderHTML(`../../views/products/products.html`, { query: { "uuid": JSON.stringify(uuid) } });
   products.GetProducts();
   cart.ClearCart();
 }
 
 // Check balance each time we switch pages
 getUserInfo = () => {
-  let uuid = '84063f34';
   ipcRenderer.send('request', {
     name: 'getUserInfo',
     type: 'GET',
@@ -29,17 +29,17 @@ getUserInfo = () => {
 }
 
 document.querySelectorAll('.link').forEach((element) => {
-  element.addEventListener('click', function(e) {
+  element.addEventListener('click', function (e) {
     url = element.id;
 
     getUserInfo();
 
-    switch(url) {
+    switch (url) {
       case "funds":
-        renderHTML(`../../views/funds/funds.html`);
+        renderHTML(`../../views/funds/funds.html`, { query: { "uuid": JSON.stringify(uuid) } });
         break;
       case "activities":
-        renderHTML(`../../views/activities/activities.html`);
+        renderHTML(`../../views/activities/activities.html`, { query: { "uuid": JSON.stringify(uuid) } });
         break;
       default:
         renderHomePage();
@@ -58,6 +58,10 @@ ipcRenderer.on('getUserInfo', (event, arg) => {
     document.getElementById('user').innerHTML = data.first_name
   }
 });
+
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);
 
 getUserInfo();
 renderHomePage();

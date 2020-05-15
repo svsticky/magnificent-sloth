@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const querystring = require('querystring');
 
 let cartList = new Array();
 let cost = 0;
@@ -8,8 +9,8 @@ let cost = 0;
 module.exports.AddToCart = (product) => {
   let alreadyInCart = cartList.findIndex(prod => prod.id == product.id);
   cost += Number(product.price);
-  
-  if(alreadyInCart > -1) {
+
+  if (alreadyInCart > -1) {
     cartList[alreadyInCart].amount++;
   } else {
     product.amount = 1;
@@ -20,7 +21,7 @@ module.exports.AddToCart = (product) => {
 
 RemoveFromCart = (index) => {
   cost -= Number(cartList[index].price);
-  
+
   if (cartList[index].amount > 1) {
     cartList[index].amount--;
   } else {
@@ -34,7 +35,7 @@ RemoveFromCart = (index) => {
 // total price which will be displayed for the user to see.
 module.exports.RenderCart = () => {
   document.getElementById('cartList').innerHTML = '';
-  for(let i = 0; i < cartList.length; i++) {
+  for (let i = 0; i < cartList.length; i++) {
     let cartElement = document.createElement('p');
     cartElement.innerHTML = `${cartList[i].amount}x - ${cartList[i].name}`
     cartElement.className = "cartItem";
@@ -43,7 +44,7 @@ module.exports.RenderCart = () => {
 
     document.getElementById('cartList').append(cartElement);
   }
-  
+
   let finalCost = Math.abs(Number(cost)).toFixed(2)
   document.getElementById('totalCost').innerHTML = `Cost: €${finalCost}`;
   if (finalCost > 0) {
@@ -65,12 +66,12 @@ module.exports.ClearCart = () => {
 // to handle the payment for us.
 function purchase() {
   let userInfo = {
-    uuid: '84063f34', // Test ID
+    uuid: uuid,
     items: ''
   }
 
-  cartList.forEach(item => { 
-    for(let i = 0; i < item.amount; i++)
+  cartList.forEach(item => {
+    for (let i = 0; i < item.amount; i++)
       userInfo.items += `${item.id},`;
   });
 
@@ -98,3 +99,6 @@ ipcRenderer.on('purchase', (event, arg) => {
     module.exports.ClearCart();
   }
 });
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);

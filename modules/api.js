@@ -11,7 +11,6 @@ module.exports.Request = async (type, url, reqBody, callback) => {
           `${url}&token=${process.env.TOKEN}` : 
           `${url}?token=${process.env.TOKEN}`}`
   });
-
   request.on('response', (response) => {
     // Request is only successful if status code 2XX
     if (/^2/.test(response.statusCode)) {

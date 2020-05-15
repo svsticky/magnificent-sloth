@@ -1,4 +1,6 @@
 const { ipcRenderer } = require('electron');
+const querystring = require('querystring');
+
 const studentInput = document.querySelector(".studentinput");
 
 // Init the div as a modal
@@ -12,7 +14,7 @@ function RegisterCard(studentNr) {
     url: 'api/checkout/card',
     body: {
       student: studentNr,
-      uuid: 'ec3ed712s' // Need to implement with nfc.
+      uuid: uuid
     }
   })
 }
@@ -78,3 +80,6 @@ document.querySelector(".register").addEventListener('click', function (e) {
     $('.ui.massive.input').popup('show');
   }
 });
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);
