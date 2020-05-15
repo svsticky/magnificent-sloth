@@ -25,3 +25,5 @@ The repository supports building a deb-package to be able to install the app on 
 `npm run build`
 
 The deb-package can be found in dist/installers.
+
+When the deb-package is installed and opened via gnome, the application expects the environment file to be in `/home/$USERNAME`. Make sure you copy `sample.env` to this location and update its values.
