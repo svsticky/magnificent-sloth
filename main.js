@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const { Request } = require('./modules/api');
-require('dotenv').config();
+require('dotenv').config('.env');
 
 function createWindow () {
   let win = new BrowserWindow({
