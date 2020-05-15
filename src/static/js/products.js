@@ -2,8 +2,7 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
-
-let uuid = "84063f34";
+const querystring = require('querystring');
 
 module.exports.GetProducts = () => {
   // Define the API request we have to do to get all the items
@@ -72,3 +71,6 @@ function renderProduct(prod, recent = false) {
 
   document.getElementById(recent ? 'recentList' : prod.category).append(html);
 }
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);

@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const querystring = require('querystring');
 
 let cartList = new Array();
 let cost = 0;
@@ -65,7 +66,7 @@ module.exports.ClearCart = () => {
 // to handle the payment for us.
 function purchase() {
   let userInfo = {
-    uuid: '84063f34', // Test ID
+    uuid: uuid, // Test ID
     items: ''
   }
 
@@ -98,3 +99,6 @@ ipcRenderer.on('purchase', (event, arg) => {
     module.exports.ClearCart();
   }
 });
+
+let query = querystring.parse(global.location.search)
+let uuid = JSON.parse(query['?uuid']);
