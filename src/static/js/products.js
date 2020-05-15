@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
 
-let uuid = "F434103";
+let uuid = "ec3ed712";
 
 module.exports.GetProducts = () => {
   // Define the API request we have to do to get all the items
@@ -27,7 +27,7 @@ module.exports.GetProducts = () => {
 // through the renderProduct function.
 ipcRenderer.on('getProducts', (event, arg) => {
   if (arg.err !== null) {
-    console.error(arg);
+    console.error(arg.err);
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
     let products = JSON.parse(arg.data);
@@ -44,7 +44,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 });
 ipcRenderer.on('recent', (event, arg) => {
   if (arg.err !== null){
-    console.error(arg);
+    console.error(arg.err);
     document.getElementById('recentList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else{
     let products = JSON.parse(arg.data);
