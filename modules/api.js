@@ -4,10 +4,12 @@ const querystring = require('querystring');
 module.exports.Request = async (type, url, reqBody, callback) => {
   const request = net.request({
     method: type,
-    protocol: process.env.PROTOCOL,
+    protocol: process.env.PROTOCOl,
     hostname: process.env.HOST,
     port: process.env.PORT,
-    path: url.includes('?') ? `${url}&token=${process.env.TOKEN}` : `${url}?token=${process.env.TOKEN}`
+    path: `${url.includes('?') ? 
+          `${url}&token=${process.env.TOKEN}` : 
+          `${url}?token=${process.env.TOKEN}`}`
   });
 
   request.on('response', (response) => {
