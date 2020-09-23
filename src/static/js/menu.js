@@ -19,7 +19,7 @@ renderHomePage = () => {
 
 // Check balance each time we switch pages
 getUserInfo = () => {
-  let uuid = 'uid';
+  let uuid = '84063f34';
   ipcRenderer.send('request', {
     name: 'getUserInfo',
     type: 'GET',

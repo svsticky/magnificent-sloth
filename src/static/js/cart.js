@@ -47,7 +47,7 @@ module.exports.RenderCart = () => {
   let finalCost = Math.abs(Number(cost)).toFixed(2)
   document.getElementById('totalCost').innerHTML = `Cost: €${finalCost}`;
   if (finalCost > 0) {
-    let balance = parseInt(document.getElementById('balance').innerHTML.substr(1)) || 0;
+    let balance = parseFloat(document.getElementById('balance').innerHTML.substr(1)) || 0;
     document.getElementById('newBalance').innerHTML = `New balance: €${Number(balance - finalCost).toFixed(2)}`;
   } else {
     document.getElementById('newBalance').innerHTML = null;
@@ -65,7 +65,7 @@ module.exports.ClearCart = () => {
 // to handle the payment for us.
 function purchase() {
   let userInfo = {
-    uuid: 'ec3ed712', // Test ID
+    uuid: '84063f34', // Test ID
     items: ''
   }
 
