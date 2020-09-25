@@ -9,6 +9,7 @@ const {
 } = require('./modules/api');
 require('dotenv').config('.env');
 const { NFC } = require('nfc-pcsc');
+const player = require('play-sound')(opts = {})
 
 function createWindow() {
   let win = new BrowserWindow({
@@ -21,7 +22,7 @@ function createWindow() {
   });
 
   win.removeMenu();
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   win.loadFile('src/views/idle/idle.html');
 
   // Switch back to idle if register finished
@@ -46,6 +47,10 @@ function createWindow() {
         return;
       }
 
+      player.play('src/static/audio/hello.mp3', function(err){
+        if (err) throw err
+      });
+
       await Request('GET', `api/checkout/card?uuid=${uuid}`, null, (err, data, statuscode) => {
         if (statuscode == 404){
           win.loadFile(`src/views/register/register.html`, {query: {"uuid": JSON.stringify(uuid)}}) // load the dashboard
@@ -59,26 +64,29 @@ function createWindow() {
       });
     });
     reader.on('card.off', card => {
-      win.loadFile('src/views/idle/idle.html')
+      win.loadFile('src/views/idle/idle.html');
+      player.play('src/static/audio/goodbye.mp3', function(err){
+        if (err) throw err
+      });
     });
+
     //TODO: Clear basket and any occurring actions for 'error', 'end' and 'error'
     reader.on('error', err => {
       console.error('reader error', err);
       win.loadFile('src/views/idle/idle.html')
       // clear any occuring activities 
     });
+
     reader.on('end', () => {
       console.log(reader.name + ' reader disconnected.');
       win.loadFile('src/views/idle/idle.html')
       // clear any ocurring activities and go back to mainpage
-      
     });
   });
+
   nfc.on('error', err => {
-    console.log('hnnggg')
     console.error(err);
     win.loadFile('src/views/idle/idle.html')
-
   });
 
   // For development purposes
