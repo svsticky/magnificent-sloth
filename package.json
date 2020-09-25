@@ -25,6 +25,7 @@
     "global": "^4.4.0",
     "jquery": "^3.4.1",
     "jslint": "^0.12.1",
-    "nfc-pcsc": "^0.8.0"
+    "nfc-pcsc": "^0.8.0",
+    "play-sound": "^1.1.3"
   }
 }

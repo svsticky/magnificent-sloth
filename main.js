@@ -16,6 +16,7 @@ function createWindow() {
   });
 
   win.removeMenu();
+  // win.webContents.openDevTools();
   win.loadFile('src/views/idle/idle.html');
 
   // Switch back to idle if register finished
