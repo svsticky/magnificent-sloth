@@ -1,4 +1,5 @@
 const { NFC } = require('nfc-pcsc');
+const player = require('play-sound')(opts = {})
 const { CardOn, ClearBasket } = require('./handle_state');
 
 module.exports.HandleAuthNFC = async (win) => {
@@ -19,11 +20,18 @@ module.exports.HandleAuthNFC = async (win) => {
         return;
       }
 
+      player.play('../src/static/audio/hello.mp3', function (err) {
+        if (err) throw err
+      });
+
       CardOn(win, uuid);
     });
 
     reader.on('card.off', card => {
       win.loadFile('src/views/idle/idle.html');
+      player.play('src/static/audio/goodbye.mp3', function (err) {
+        if (err) throw err
+      });
     });
 
     reader.on('error', err => {
