@@ -97,6 +97,8 @@ ipcRenderer.on('purchase', (event, arg) => {
     let newBalance = parseFloat(res.balance).toFixed(2);
     document.getElementById('balance').innerHTML = `€${newBalance}`
     module.exports.ClearCart();
+    let sound = new Audio('../../static/audio/money.mp3');
+    sound.play();
   }
 });
 
