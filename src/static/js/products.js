@@ -28,7 +28,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
     console.error(arg.err);
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
-    let products = JSON.parse(arg.data);
+    let products = JSON.parse(arg.data).sort((a, b) => a.name.localeCompare(b.name));
 
     for(let i = 0; i < products.length; i++)
       renderProduct(products[i]);
