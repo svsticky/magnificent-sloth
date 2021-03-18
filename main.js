@@ -16,7 +16,8 @@ function createWindow() {
     height: 768,
     fullscreen: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
