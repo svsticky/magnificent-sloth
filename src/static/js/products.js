@@ -14,11 +14,11 @@ module.exports.GetProducts = () => {
     body: null
   });
 
-  ipcRenderer.send('request', {
-    name: 'recent',
-    type: 'GET',
-    url: `api/checkout/recent?uuid=${uuid}`,
-  })
+  // ipcRenderer.send('request', {
+  //   name: 'recent',
+  //   type: 'GET',
+  //   url: `api/checkout/recent?uuid=${uuid}`,
+  // })
 }
 
 // When we receive the data from Koala, render these
@@ -29,6 +29,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
     let products = JSON.parse(arg.data);
+    products = products.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
     for (let i = 0; i < products.length; i++)
       renderProduct(products[i]);
@@ -41,18 +42,20 @@ ipcRenderer.on('getProducts', (event, arg) => {
   }
 });
 
-ipcRenderer.on('recent', (event, arg) => {
-  if (arg.err !== null) {
-    console.error(arg.err);
-    document.getElementById('recentList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
-  } else {
-    let products = JSON.parse(arg.data);
-    if (products.length == 0) document.getElementById('recent').remove()
-    for (let i = 0; i < products.length; i++) {
-      renderProduct(products[i], true)
-    }
-  }
-})
+// ipcRenderer.on('recent', (event, arg) => {
+//   if (arg.err !== null) {
+//     console.error(arg.err);
+//     document.getElementById('recentList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
+//   } else {
+//     let products = JSON.parse(arg.data);
+//     products = products.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i)
+//     if (products.length == 0) document.getElementById('recent').remove()
+    
+//     for (let i = 0; i < products.length && i < 5; i++) {
+//       renderProduct(products[i], true)
+//     }
+//   }
+// });
 
 // Renders the block for each product.
 function renderProduct(prod, recent = false) {
@@ -69,7 +72,7 @@ function renderProduct(prod, recent = false) {
     html.getElementsByClassName('productImage')[0].src = prod.image
   html.addEventListener("click", () => { AddToCart(prod) });
 
-  document.getElementById(recent ? 'recentList' : prod.category).append(html);
+  // document.getElementById(recent ? 'recentList' : prod.category).append(html);
 }
 
 let query = querystring.parse(global.location.search)
