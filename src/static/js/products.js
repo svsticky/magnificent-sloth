@@ -73,6 +73,7 @@ function renderProduct(prod, recent = false) {
   html.addEventListener("click", () => { AddToCart(prod) });
 
   // document.getElementById(recent ? 'recentList' : prod.category).append(html);
+  document.getElementById(prod.category).append(html);
 }
 
 let query = querystring.parse(global.location.search)
