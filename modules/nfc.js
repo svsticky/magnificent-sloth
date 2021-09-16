@@ -13,7 +13,7 @@ module.exports.HandleAuthNFC = async (win) => {
 
       try {
         const uid = await reader.transmit(data, 12);
-        uuid = uid.toString("hex").substring(0, 8);
+        uuid = uid.toString("hex").substring(0, 8).toUpperCase();
       }
       catch (err) {
         console.error(err);
