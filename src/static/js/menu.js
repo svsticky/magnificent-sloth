@@ -65,3 +65,32 @@ let uuid = JSON.parse(query['?uuid']);
 
 getUserInfo();
 renderHomePage();
+
+// Secret Radio Menu
+const interval = 1000;
+let firstClick = 0;
+let clicks = 0;
+
+const logo = document.getElementById("logo");
+logo.addEventListener("click", () => {
+  const date = new Date();
+  const time = date.getTime();  
+  clicks++;
+
+  if (clicks == 1) {
+    firstClick = time;
+  } else if (clicks >= 5) {
+    const lastClick = time;
+    const diff = lastClick - firstClick;
+
+    if (diff < interval) {
+      console.log("OPENING ADMIN RADIO SCREEN BRRRRTTT");
+      $('.ui.modal.radio').modal('show'); // Not showing yet.
+    } else {
+      console.log("Lol wat probeer je");
+    }
+
+    clicks = 0;
+    firstClick = 0;
+  }
+});
