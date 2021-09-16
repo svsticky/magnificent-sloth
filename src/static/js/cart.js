@@ -40,7 +40,6 @@ module.exports.RenderCart = () => {
     cartElement.innerHTML = `${cartList[i].amount}x - ${cartList[i].name}`
     cartElement.className = "cartItem";
     cartElement.addEventListener("touchstart", () => RemoveFromCart(i));
-    cartElement.addEventListener("click", () => RemoveFromCart(i));
 
     document.getElementById('cartList').append(cartElement);
   }
