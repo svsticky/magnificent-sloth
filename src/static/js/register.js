@@ -64,17 +64,9 @@ document.querySelector(".undo").addEventListener('click', function (e) {
   studentInput.value = studentInput.value.slice(0, -1);
 });
 
-//Validates studentnumber it works the same as ISBN-10/13 but with with 7
-function validate(input,i,sum=0){
-  for(i = 0; i < input.length; i++){
-    sum += parseInt(input[i]) * (input.length - i);
-  }
-  return (sum % 11) == 0
-}
-
 // Register button
 document.querySelector(".register").addEventListener('click', function (e) {
-  if (/\F\d{6}/.test(studentInput.value) || (/\d{7}/.test(studentInput.value) && validate(studentInput.value))) {
+  if (/\F\d{6}/.test(studentInput.value) || (/\d{7}/.test(studentInput.value))) {
     RegisterCard(studentInput.value);
   } else {
     $('.ui.massive.input').popup('show');
