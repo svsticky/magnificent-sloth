@@ -24,7 +24,7 @@ function createWindow() {
   });
 
   // Handle NFC authentication
-  if (process.env.ENV ? process.env.ENV.trim() === "dev" : false) {
+  if (process.env.SLOTH_ENV ? process.env.SLOTH_ENV.trim() === "dev" : false) {
     win.webContents.openDevTools();
     HandleAuthDev(win);
   } else {
