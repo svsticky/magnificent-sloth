@@ -7,6 +7,12 @@ const studentInput = document.querySelector(".studentinput");
 $('.ui.basic.modal')
   .modal();
 
+let query = querystring.parse(global.location.search)
+let uuid = null;
+if (Object.keys(query).length != 0) {
+  uuid = JSON.parse(query['?uuid']);
+}
+  
 function RegisterCard(studentNr) {
   ipcRenderer.send('request', {
     name: 'register',
@@ -72,6 +78,3 @@ document.querySelector(".register").addEventListener('click', function (e) {
     $('.ui.massive.input').popup('show');
   }
 });
-
-let query = querystring.parse(global.location.search)
-let uuid = JSON.parse(query['?uuid']);
