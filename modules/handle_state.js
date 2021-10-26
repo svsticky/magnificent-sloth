@@ -7,7 +7,7 @@ module.exports.CardOn = async (win, uuid) => {
       win.loadFile(`src/views/base/base.html`, { query: { "uuid": JSON.stringify(uuid) } });
     } else if (statusCode == 404) {
       // Show register page if card not found
-      win.loadFile(`src/views/register/register.html`);
+      win.loadFile(`src/views/register/register.html`, { query: { "uuid": JSON.stringify(uuid) } });
     } else if (statusCode == 401) {
       // Blocked card
       win.loadFile(`src/views/idle/idle.html`, { query: { error: "This card has been blocked. Please add a new card." } });
