@@ -6,6 +6,10 @@ const path = require('path');
 const fs = require('fs');
 let url = "products";
 
+const query = querystring.parse(global.location.search)
+const modules = JSON.parse(query['modules']);
+const uuid = JSON.parse(query['?uuid']);
+
 renderHTML = page => {
   page = path.join(__dirname, page);
   const file = fs.readFileSync(page);
@@ -29,6 +33,10 @@ getUserInfo = () => {
 }
 
 document.querySelectorAll('.link').forEach((element) => {
+  if (modules.indexOf(element.id) != -1) {
+    element.classList.remove("hidden")
+  }
+  
   element.addEventListener('click', function (e) {
     url = element.id;
 
@@ -59,9 +67,6 @@ ipcRenderer.on('getUserInfo', (event, arg) => {
   }
 });
 
-
-let query = querystring.parse(global.location.search)
-let uuid = JSON.parse(query['?uuid']);
 
 getUserInfo();
 renderHomePage();

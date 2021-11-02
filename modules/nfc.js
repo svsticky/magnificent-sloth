@@ -24,7 +24,7 @@ module.exports.HandleAuthNFC = async (win) => {
         if (err) throw err
       });
 
-      CardOn(win, uuid);
+      CardOn(win, uuid, process.env.MODULES);
     });
 
     reader.on('card.off', card => {

@@ -3,7 +3,7 @@ const { CardOn, ClearBasket } = require('./handle_state');
 
 module.exports.HandleAuthDev = async (win) => {
   globalShortcut.register('Ctrl+1', () => {
-    CardOn(win, process.env.TEST_UUID);
+    CardOn(win, process.env.TEST_UUID, process.env.MODULES);
   });
 
   globalShortcut.register('Ctrl+2', () => {
