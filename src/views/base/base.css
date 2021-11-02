@@ -36,13 +36,7 @@ body {
 /* Default components */
 
 main {
-	height: calc(100% - 120px);
+	height: calc(100% - 100px);
 	position: relative;
 	overflow-y: auto;
-}
-
-footer {
-	width: 100%;
-	text-align: center;
-	height: 20px;
 }
