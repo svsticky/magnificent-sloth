@@ -1,10 +1,10 @@
 const { Request } = require('./api');
 
-module.exports.CardOn = async (win, uuid) => {
+module.exports.CardOn = async (win, uuid, modules) => {
   await Request('GET', `api/checkout/card?uuid=${uuid}`, null, (err, data, statusCode) => {
     if (statusCode == 200) {
       // Load the dashboard
-      win.loadFile(`src/views/base/base.html`, { query: { "uuid": JSON.stringify(uuid) } });
+      win.loadFile(`src/views/base/base.html`, { query: { "uuid": JSON.stringify(uuid), "modules": modules } });
     } else if (statusCode == 404) {
       // Show register page if card not found
       win.loadFile(`src/views/register/register.html`, { query: { "uuid": JSON.stringify(uuid) } });
