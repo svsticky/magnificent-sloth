@@ -10,7 +10,7 @@ module.exports.GetProducts = () => {
   ipcRenderer.send('request', {
     name: 'getProducts',
     type: 'GET',
-    url: 'api/checkout/products',
+    url: 'products',
     body: null
   });
 

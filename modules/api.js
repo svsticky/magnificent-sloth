@@ -9,7 +9,10 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     port: process.env.PORT,
     path: `${url.includes('?') ? 
           `${url}&token=${process.env.TOKEN}` : 
-          `${url}?token=${process.env.TOKEN}`}`
+          `${url}?token=${process.env.TOKEN}`}`,
+    headers: {
+      Authorization: process.env.TOKEN
+    }
   });
 
   request.on('response', (response) => {

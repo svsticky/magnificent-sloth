@@ -1,7 +1,7 @@
 const { Request } = require('./api');
 
 module.exports.CardOn = async (win, uuid, modules) => {
-  await Request('GET', `api/checkout/card?uuid=${uuid}`, null, (err, data, statusCode) => {
+  await Request('GET', `/card?uuid=${uuid}`, null, (err, data, statusCode) => {
     if (statusCode == 200) {
       // Load the dashboard
       win.loadFile(`src/views/base/base.html`, { query: { "uuid": JSON.stringify(uuid), "modules": modules } });
