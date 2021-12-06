@@ -71,7 +71,6 @@ function renderProduct(prod, category, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
-  console.log(prod);
   html.className = 'column';
   html.innerHTML = product;
   html.getElementsByClassName('name')[0].innerHTML = prod.name
@@ -82,8 +81,6 @@ function renderProduct(prod, category, recent = false) {
   }
   html.addEventListener("click", () => { AddToCart(prod) });
 
-  // document.getElementById(recent ? 'recentList' : prod.category).append(html);
-  console.log(category.name);
   document.getElementById(category.name.toLowerCase()).append(html);
 }
 

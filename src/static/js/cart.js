@@ -66,20 +66,19 @@ module.exports.ClearCart = () => {
 function purchase() {
   let userInfo = {
     uuid: uuid,
-    items: ''
+    items: []
   }
 
   cartList.forEach(item => {
-    for (let i = 0; i < item.amount; i++)
-      userInfo.items += `${item.id},`;
+    userInfo.items.push({
+      id: item.id,
+      amount: item.amount
+    });
   });
-
-  userInfo.items = `[${userInfo.items.slice(0, -1)}]`
-
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
-    url: `api/checkout/transaction`,
+    url: `transaction`,
     body: {
       uuid: userInfo.uuid,
       items: userInfo.items
@@ -92,6 +91,7 @@ ipcRenderer.on('purchase', (event, arg) => {
   if (arg.err !== null) {
     console.error(arg.err);
   } else {
+    console.log(arg.data);
     let res = JSON.parse(arg.data);
     let newBalance = parseFloat(res.balance).toFixed(2);
     document.getElementById('balance').innerHTML = `€${newBalance}`

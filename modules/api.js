@@ -31,8 +31,8 @@ module.exports.Request = async (type, url, reqBody, callback) => {
   request.on('error', (error) =>{
     callback(error,null,null)
   })
-
-  request.write(querystring.encode(reqBody));
+  if(reqBody !== null)
+    request.write(JSON.stringify(reqBody));
 
   request.end();
 }
