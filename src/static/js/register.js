@@ -1,3 +1,4 @@
+const { NONAME } = require('dns');
 const { ipcRenderer } = require('electron');
 const querystring = require('querystring');
 
@@ -12,12 +13,16 @@ let uuid = null;
 if (Object.keys(query).length != 0) {
   uuid = JSON.parse(query['?uuid']);
 }
+
+if (uuid === null && process.env.SLOTH_ENV === "dev") {
+  uuid = process.env.TEST_UUID
+}
   
 function RegisterCard(studentNr) {
   ipcRenderer.send('request', {
     name: 'register',
     type: 'POST',
-    url: 'api/checkout/card',
+    url: 'register',
     body: {
       student: studentNr,
       uuid: uuid
