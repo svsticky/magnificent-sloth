@@ -5,13 +5,13 @@ const { AddToCart } = require('./cart.js');
 const querystring = require('querystring');
 const { env } = require('process');
 
-module.exports.GetProducts = () => {
+module.exports.GetProducts = (uuid) => {
   // Define the API request we have to do to get all the items
   // from Koala.
   ipcRenderer.send('request', {
     name: 'getProducts',
     type: 'GET',
-    url: 'products',
+    url: `products?uuid=${uuid}`,
     body: null
   });
 
@@ -42,12 +42,6 @@ ipcRenderer.on('getProducts', (event, arg) => {
 
     // for (let i = 0; i < products.length; i++)
     //   renderProduct(products[i]);
-
-    let date = new Date();
-    if (date.getHours() < 17) {
-      document.getElementById("alcoholText").style.display = "none";
-      document.getElementById("liquor").style.display = "none";
-    }
   }
 });
 

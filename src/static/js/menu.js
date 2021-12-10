@@ -18,7 +18,7 @@ renderHTML = page => {
 
 renderHomePage = () => {
   renderHTML(`../../views/products/products.html`, { query: { "uuid": JSON.stringify(uuid) } });
-  products.GetProducts();
+  products.GetProducts(uuid);
   cart.ClearCart();
 }
 
