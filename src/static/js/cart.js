@@ -53,6 +53,12 @@ module.exports.RenderCart = () => {
     document.getElementById('newBalance').innerHTML = null;
   }
   document.getElementById('purchase').addEventListener('click', purchase)
+  if (cartList.length === 0 ) {
+    document.getElementById('purchase').className = "ui button primary disabled"
+  }
+  else {
+    document.getElementById('purchase').className = "ui button primary"
+  }
 }
 
 module.exports.ClearCart = () => {
