@@ -81,6 +81,7 @@ function purchase() {
       amount: item.amount
     });
   });
+
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
@@ -97,7 +98,6 @@ ipcRenderer.on('purchase', (event, arg) => {
   if (arg.err !== null) {
     console.error(arg.err);
   } else {
-    console.log(arg.data);
     let res = JSON.parse(arg.data);
     let newBalance = parseFloat(res.balance).toFixed(2);
     document.getElementById('balance').innerHTML = `€${newBalance}`

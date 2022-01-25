@@ -2,8 +2,6 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
-const querystring = require('querystring');
-const { env } = require('process');
 
 module.exports.GetProducts = (uuid) => {
   // Define the API request we have to do to get all the items
@@ -31,7 +29,6 @@ ipcRenderer.on('getProducts', (event, arg) => {
   } else {
     let categories = JSON.parse(arg.data);
     for (let i = 0; i < categories.length; i++) {
-      console.log(categories[i]);
       let products = categories[i].products.sort((a, b) => (a.name > b.name) ? 1 : -1)
       for (let j = 0; j < products.length; j++) {
         renderProduct(products[j], categories[i]);
@@ -77,6 +74,3 @@ function renderProduct(prod, category, recent = false) {
 
   document.getElementById(category.name.toLowerCase()).append(html);
 }
-
-let query = querystring.parse(global.location.search)
-let uuid = JSON.parse(query['?uuid']);

@@ -54,7 +54,6 @@ ipcRenderer.on('register', (event, arg) => {
       })
   } else {
     // Other errors
-    console.log(arg.statusCode)
     $('body')
       .toast({
         class: 'massive error',
