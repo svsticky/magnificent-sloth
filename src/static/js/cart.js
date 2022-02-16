@@ -68,23 +68,26 @@ function purchase() {
     uuid: uuid,
     items: ''
   }
+  $('.ui.basic.modal').modal({onApprove: function(){
+    cartList.forEach(item => {
+      for (let i = 0; i < item.amount; i++)
+        userInfo.items += `${item.id},`;
+    });
+  
+    userInfo.items = `[${userInfo.items.slice(0, -1)}]`
+  
+    ipcRenderer.send('request', {
+      name: 'purchase',
+      type: 'POST',
+      url: `api/checkout/transaction`,
+      body: {
+        uuid: userInfo.uuid,
+        items: userInfo.items
+      }
+    });
+  }})
+    .modal('show');
 
-  cartList.forEach(item => {
-    for (let i = 0; i < item.amount; i++)
-      userInfo.items += `${item.id},`;
-  });
-
-  userInfo.items = `[${userInfo.items.slice(0, -1)}]`
-
-  ipcRenderer.send('request', {
-    name: 'purchase',
-    type: 'POST',
-    url: `api/checkout/transaction`,
-    body: {
-      uuid: userInfo.uuid,
-      items: userInfo.items
-    }
-  });
 }
 
 // Handle purchase response
