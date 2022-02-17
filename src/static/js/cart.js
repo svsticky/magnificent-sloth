@@ -4,6 +4,9 @@ const querystring = require('querystring');
 let cartList = new Array();
 let cost = 0;
 
+// Init the div as a modal
+$('#confirmPurchase').modal();
+
 // Puts the given product in the cart or increments it if
 // it's already present.
 module.exports.AddToCart = (product) => {
@@ -52,13 +55,19 @@ module.exports.RenderCart = () => {
   } else {
     document.getElementById('newBalance').innerHTML = null;
   }
-  document.getElementById('purchase').addEventListener('click', purchase)
+
+  document.getElementById('purchase').addEventListener('click', confirmPurchase);
+  document.getElementById('purchaseConfirmed').addEventListener('click', purchase);
 }
 
 module.exports.ClearCart = () => {
   cartList = new Array();
   cost = 0;
   module.exports.RenderCart();
+}
+
+function confirmPurchase() {
+  $('#confirmPurchase').modal('show')
 }
 
 // Event for when the user click purchase. Send a request to Koala

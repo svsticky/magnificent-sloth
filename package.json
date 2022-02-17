@@ -7,7 +7,7 @@
     "commit"
   ],
   "scripts": {
-    "start": "./node_modules/.bin/electron-rebuild && ENV=dev electron .",
+    "start": "./node_modules/.bin/electron-rebuild && SLOTH_ENV=dev electron .",
     "build-semantic": "cd ./src/semantic && npx gulp build",
     "build": "electron-packager . magnificent-sloth --platform=linux --arch=x64 --out dist && electron-installer-debian --src dist/magnificent-sloth-linux-x64/ --dest dist/installers/ --arch amd64"
   },
