@@ -12,7 +12,7 @@
     "build": "electron-packager . magnificent-sloth --platform=linux --arch=x64 --out dist && electron-installer-debian --src dist/magnificent-sloth-linux-x64/ --dest dist/installers/ --arch amd64"
   },
   "devDependencies": {
-    "electron": "^12.0.1",
+    "electron": "^15.5.5",
     "electron-installer-debian": "^3.0.0",
     "electron-packager": "^14.2.1",
     "electron-rebuild": "^1.10.0"
