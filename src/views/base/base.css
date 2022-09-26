@@ -44,3 +44,8 @@ main {
 	position: relative;
 	overflow-y: auto;
 }
+
+.confirmBalanceList {
+	min-width: 200px !important;
+	display: inline-block;
+}

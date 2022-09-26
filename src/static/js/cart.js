@@ -67,7 +67,16 @@ module.exports.ClearCart = () => {
 }
 
 function confirmPurchase() {
-  $('#confirmPurchase').modal('show')
+  document.getElementById("confirmOldBalance").innerHTML = document.getElementById("balance").innerHTML;
+  document.getElementById("confirmProductTotal").innerHTML = "€" + Math.abs(Number(cost)).toFixed(2);
+  document.getElementById("confirmNewBalance").innerHTML = document.getElementById("newBalance").innerHTML.split(" ")[2];
+  for(let index in cartList) {
+    let cartElement = document.createElement('ul');
+    cartElement.innerHTML = `${cartList[index].amount}x - ${cartList[index].name}`
+    cartElement.className = "cartItem";
+    document.getElementById('confirmItemList').append(cartElement);
+  }
+  $('#confirmPurchase').modal('show');
 }
 
 // Event for when the user click purchase. Send a request to Koala
