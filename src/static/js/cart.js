@@ -82,6 +82,16 @@ function confirmPurchase() {
 // Event for when the user click purchase. Send a request to Koala
 // to handle the payment for us.
 function purchase() {
+  if (document.getElementById("confirmNewBalance").innerHTML.indexOf("-") != -1) {
+    let errSound = new Audio('../../static/audio/error.mp3');
+    errSound.play();
+    $('body').toast({
+      class: 'error',
+      message: "You can't have a negative balance!"
+    });
+    return
+  }
+
   let userInfo = {
     uuid: uuid,
     items: ''
@@ -107,8 +117,15 @@ function purchase() {
 
 // Handle purchase response
 ipcRenderer.on('purchase', (event, arg) => {
+  console.log(arg)
   if (arg.err !== null) {
     console.error(arg.err);
+    $('body').toast({
+      class: 'error',
+      message: "Your purchase failed, please try again!"
+    });
+    let errSound = new Audio('../../static/audio/error.mp3');
+    errSound.play();
   } else {
     let res = JSON.parse(arg.data);
     let newBalance = parseFloat(res.balance).toFixed(2);
