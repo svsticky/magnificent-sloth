@@ -1,5 +1,5 @@
 body {
-	background-color: #29738f;
+	background-color: #61518f;
 }
 #title {
   position: relative;
@@ -20,17 +20,17 @@ body {
   margin: auto;
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto auto auto ; 
+  grid-template-rows: auto auto auto auto ;
   gap: 1.5% 0%;
-}   
+}
 
 .actions{
   text-align: center;
   margin-top: 3%;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
