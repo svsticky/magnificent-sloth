@@ -12,12 +12,16 @@ let uuid = null;
 if (Object.keys(query).length != 0) {
   uuid = JSON.parse(query['?uuid']);
 }
-  
+
+if (uuid === null && process.env.SLOTH_ENV === "dev") {
+  uuid = process.env.TEST_UUID
+}
+
 function RegisterCard(studentNr) {
   ipcRenderer.send('request', {
     name: 'register',
     type: 'POST',
-    url: 'api/checkout/card',
+    url: 'api/register',
     body: {
       student: studentNr,
       uuid: uuid
@@ -27,7 +31,7 @@ function RegisterCard(studentNr) {
 
 ipcRenderer.on('register', (event, arg) => {
   console.log(arg)
-  if (arg !== null && arg.statusCode == 201) {
+  if (arg.statusCode == 201) {
     // On success
     $('.ui.basic.modal').modal({onHidden: function(){
       ipcRenderer.send("register-finished")
