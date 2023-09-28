@@ -56,7 +56,14 @@ module.exports.RenderCart = () => {
     document.getElementById('newBalance').innerHTML = null;
   }
 
-  document.getElementById('purchase').addEventListener('click', confirmPurchase);
+  if (cartList.length === 0 ) {
+    document.getElementById('purchase').className = "ui button primary disabled"
+  }
+  else {
+    document.getElementById('purchase').className = "ui button primary"
+  }
+
+  document.getElementById('purchase').addEventListener('click', purchase);
   document.getElementById('purchaseConfirmed').addEventListener('click', purchase);
 }
 
@@ -94,24 +101,21 @@ function purchase() {
 
   let userInfo = {
     uuid: uuid,
-    items: ''
+    items: []
   }
 
   cartList.forEach(item => {
-    for (let i = 0; i < item.amount; i++)
-      userInfo.items += `${item.id},`;
+    userInfo.items.push({
+      id: item.id,
+      amount: item.amount
+    });
   });
-
-  userInfo.items = `[${userInfo.items.slice(0, -1)}]`
 
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
-    url: `api/checkout/transaction`,
-    body: {
-      uuid: userInfo.uuid,
-      items: userInfo.items
-    }
+    url: `api/transaction`,
+    body: userInfo
   });
 }
 

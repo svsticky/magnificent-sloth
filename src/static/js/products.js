@@ -4,13 +4,13 @@ const fs = require('fs');
 const { AddToCart } = require('./cart.js');
 const querystring = require('querystring');
 
-module.exports.GetProducts = () => {
+module.exports.GetProducts = (uuid) => {
   // Define the API request we have to do to get all the items
   // from Koala.
   ipcRenderer.send('request', {
     name: 'getProducts',
     type: 'GET',
-    url: 'api/checkout/products',
+    url: `api/products?uuid=${uuid}`,
     body: null
   });
 
@@ -28,16 +28,34 @@ ipcRenderer.on('getProducts', (event, arg) => {
     console.error(arg.err);
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
-    let products = JSON.parse(arg.data);
-    products = products.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    let categories = JSON.parse(arg.data);
+    for (let i = 0; i < categories.length; i++) {
+      // Create category HTML
+      let category = categories[i];
+      let parser = new DOMParser();
+      document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
+        `<a class="ui red basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
+      , 'text/html').body);
+      document.getElementById("productList").append(parser.parseFromString(
+        `
+        <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
+        <h1 class="ui horizontal divider header">
+          ${category.name}
+        </h1>
+        <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
+        `
+      , 'text/html').body);
 
-    for (let i = 0; i < products.length; i++)
-      renderProduct(products[i]);
+      let products = categories[i].products.sort((a, b) => (a.name > b.name) ? 1 : -1)
+      for (let j = 0; j < products.length; j++) {
+        renderProduct(products[j], categories[i]);
+      }
+    }
 
     let date = new Date();
     if (date.getHours() < 17) {
-      document.getElementById("alcoholText").style.display = "none";
-      document.getElementById("liquor").style.display = "none";
+      // document.getElementById("alcoholText").style.display = "none";
+      // document.getElementById("alcohol").style.display = "none";
     }
   }
 });
@@ -58,7 +76,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // });
 
 // Renders the block for each product.
-function renderProduct(prod, recent = false) {
+function renderProduct(prod, category, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
@@ -66,15 +84,13 @@ function renderProduct(prod, recent = false) {
   html.className = 'column';
   html.innerHTML = product;
   html.getElementsByClassName('name')[0].innerHTML = prod.name
-  html.getElementsByClassName('category')[0].innerHTML = prod.category.charAt(0).toUpperCase() + prod.category.slice(1)
+  html.getElementsByClassName('category')[0].innerHTML = category.name
   html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
-  if (prod.image)
-    html.getElementsByClassName('productImage')[0].src = prod.image
+  if (prod.image_url) {
+    html.getElementsByClassName('productImage')[0].src = prod.image_url
+  }
   html.addEventListener("click", () => { AddToCart(prod) });
 
   // document.getElementById(recent ? 'recentList' : prod.category).append(html);
-  document.getElementById(prod.category).append(html);
+  document.getElementById(category.name.toLowerCase()).append(html);
 }
-
-let query = querystring.parse(global.location.search)
-let uuid = JSON.parse(query['?uuid']);

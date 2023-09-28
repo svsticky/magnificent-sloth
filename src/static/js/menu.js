@@ -18,7 +18,7 @@ renderHTML = page => {
 
 renderHomePage = () => {
   renderHTML(`../../views/products/products.html`, { query: { "uuid": JSON.stringify(uuid) } });
-  products.GetProducts();
+  products.GetProducts(uuid);
   cart.ClearCart();
 }
 
@@ -27,7 +27,7 @@ getUserInfo = () => {
   ipcRenderer.send('request', {
     name: 'getUserInfo',
     type: 'GET',
-    url: `api/checkout/card?uuid=${uuid}`,
+    url: `api/card?uuid=${uuid}`,
     body: null
   });
 }
@@ -63,7 +63,7 @@ ipcRenderer.on('getUserInfo', (event, arg) => {
   } else {
     let data = JSON.parse(arg.data)
     document.getElementById('balance').innerHTML = `€${parseFloat(data.balance).toFixed(2)}`
-    document.getElementById('user').innerHTML = data.first_name
+    document.getElementById('user').innerHTML = data.name
   }
 });
 

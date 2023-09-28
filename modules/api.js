@@ -1,5 +1,4 @@
 const { net } = require('electron');
-const querystring = require('querystring');
 
 module.exports.Request = async (type, url, reqBody, callback) => {
   const request = net.request({
@@ -9,7 +8,10 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     port: process.env.PORT,
     path: `${url.includes('?') ? 
           `${url}&token=${process.env.TOKEN}` : 
-          `${url}?token=${process.env.TOKEN}`}`
+          `${url}?token=${process.env.TOKEN}`}`,
+          headers: {
+            Authorization: process.env.TOKEN
+          }
   });
 
   request.on('response', (response) => {
@@ -29,7 +31,8 @@ module.exports.Request = async (type, url, reqBody, callback) => {
     callback(error,null,null)
   })
 
-  request.write(querystring.encode(reqBody));
+  if(reqBody !== null)
+    request.write(JSON.stringify(reqBody));
 
   request.end();
 }
