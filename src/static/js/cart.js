@@ -4,8 +4,10 @@ const querystring = require('querystring');
 let cartList = new Array();
 let cost = 0;
 
-// Init the div as a modal
-$('#confirmPurchase').modal();
+$(document).ready(function() {
+  // Init the div as a modal
+  $('#confirmPurchase').modal();
+});
 
 // Puts the given product in the cart or increments it if
 // it's already present.
@@ -63,7 +65,7 @@ module.exports.RenderCart = () => {
     document.getElementById('purchase').className = "ui button primary"
   }
 
-  document.getElementById('purchase').addEventListener('click', purchase);
+  document.getElementById('purchase').addEventListener('click', confirmPurchase);
   document.getElementById('purchaseConfirmed').addEventListener('click', purchase);
 }
 
@@ -77,6 +79,7 @@ function confirmPurchase() {
   document.getElementById("confirmOldBalance").innerHTML = document.getElementById("balance").innerHTML;
   document.getElementById("confirmProductTotal").innerHTML = "€" + Math.abs(Number(cost)).toFixed(2);
   document.getElementById("confirmNewBalance").innerHTML = document.getElementById("newBalance").innerHTML.split(" ")[2];
+  document.getElementById('confirmItemList').innerHTML = '';
   for(let index in cartList) {
     let cartElement = document.createElement('ul');
     cartElement.innerHTML = `${cartList[index].amount}x - ${cartList[index].name}`
@@ -111,6 +114,16 @@ function purchase() {
     });
   });
 
+  if (userInfo.items.length === 0) {
+    let errSound = new Audio('../../static/audio/error.mp3');
+    errSound.play();
+    $('body').toast({
+      class: 'error',
+      message: "You can't purchase nothing!"
+    });
+    return
+  }
+
   ipcRenderer.send('request', {
     name: 'purchase',
     type: 'POST',
@@ -132,11 +145,13 @@ ipcRenderer.on('purchase', (event, arg) => {
     errSound.play();
   } else {
     let res = JSON.parse(arg.data);
-    let newBalance = parseFloat(res.balance).toFixed(2);
-    document.getElementById('balance').innerHTML = `€${newBalance}`
-    module.exports.ClearCart();
-    let sound = new Audio('../../static/audio/money.mp3');
-    sound.play();
+    if (res) {
+      let newBalance = parseFloat(res.balance).toFixed(2);
+      document.getElementById('balance').innerHTML = `€${newBalance}`
+      module.exports.ClearCart();
+      let sound = new Audio('../../static/audio/money.mp3');
+      sound.play();
+    }
   }
 });
 
