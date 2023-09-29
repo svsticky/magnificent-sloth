@@ -62,8 +62,10 @@ ipcRenderer.on('getUserInfo', (event, arg) => {
     console.error(arg.err);
   } else {
     let data = JSON.parse(arg.data)
-    document.getElementById('balance').innerHTML = `€${parseFloat(data.balance).toFixed(2)}`
-    document.getElementById('user').innerHTML = data.name
+    if (data) {
+      document.getElementById('balance').innerHTML = `€${parseFloat(data.balance).toFixed(2)}`
+      document.getElementById('user').innerHTML = data.name
+    }
   }
 });
 

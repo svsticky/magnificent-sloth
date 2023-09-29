@@ -29,33 +29,29 @@ ipcRenderer.on('getProducts', (event, arg) => {
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
     let categories = JSON.parse(arg.data);
-    for (let i = 0; i < categories.length; i++) {
-      // Create category HTML
-      let category = categories[i];
-      let parser = new DOMParser();
-      document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
-        `<a class="ui red basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
-      , 'text/html').body);
-      document.getElementById("productList").append(parser.parseFromString(
-        `
-        <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
-        <h1 class="ui horizontal divider header">
-          ${category.name}
-        </h1>
-        <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
-        `
-      , 'text/html').body);
-
-      let products = categories[i].products.sort((a, b) => (a.name > b.name) ? 1 : -1)
-      for (let j = 0; j < products.length; j++) {
-        renderProduct(products[j], categories[i]);
+    if (categories && categories.length > 0) {
+      for (let i = 0; i < categories.length; i++) {
+        // Create category HTML
+        let category = categories[i];
+        let parser = new DOMParser();
+        document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
+          `<a class="ui red basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
+        , 'text/html').body);
+        document.getElementById("productList").append(parser.parseFromString(
+          `
+          <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
+          <h1 class="ui horizontal divider header">
+            ${category.name}
+          </h1>
+          <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
+          `
+        , 'text/html').body);
+  
+        let products = categories[i].products.sort((a, b) => (a.name > b.name) ? 1 : -1)
+        for (let j = 0; j < products.length; j++) {
+          renderProduct(products[j], categories[i]);
+        }
       }
-    }
-
-    let date = new Date();
-    if (date.getHours() < 17) {
-      // document.getElementById("alcoholText").style.display = "none";
-      // document.getElementById("alcohol").style.display = "none";
     }
   }
 });

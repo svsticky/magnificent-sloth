@@ -21,12 +21,16 @@ module.exports.Request = async (type, url, reqBody, callback) => {
         let bufferData = Buffer.from(data);
         let res = bufferData.toString();
         callback(null, res, response.statusCode);
+        return;
       });
     } else {
       callback(response.statusMessage, null, response.statusCode);
+      return;
     }
+
+    callback(null, null, response.statusCode);
   });
-  
+
   request.on('error', (error) =>{
     callback(error,null,null)
   })
