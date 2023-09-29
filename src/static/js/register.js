@@ -4,8 +4,7 @@ const querystring = require('querystring');
 const studentInput = document.querySelector(".studentinput");
 
 // Init the div as a modal
-$('.ui.basic.modal')
-  .modal();
+$('.ui.basic.modal').modal();
 
 let query = querystring.parse(global.location.search)
 let uuid = null;
@@ -35,8 +34,7 @@ ipcRenderer.on('register', (event, arg) => {
     // On success
     $('.ui.basic.modal').modal({onHidden: function(){
       ipcRenderer.send("register-finished")
-    }})
-      .modal('show');
+    }}).modal('show');
   } else if (arg.statusCode == 404) {
     // If ID wasn't found in the database
     $('body')
