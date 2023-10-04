@@ -24,6 +24,9 @@ module.exports.GetProducts = (uuid) => {
 // When we receive the data from Koala, render these
 // through the renderProduct function.
 ipcRenderer.on('getProducts', (event, arg) => {
+  document.getElementById("categoryList").firstElementChild.innerHTML = "";
+  document.getElementById("productList").innerHTML = "";
+
   if (arg.err !== null) {
     console.error(arg.err);
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."

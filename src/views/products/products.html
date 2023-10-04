@@ -1,3 +1,6 @@
+<script>
+  require('../../static/js/cart');
+</script>
 <article class="products">
   <section id="categoryList">
     <section class="ui buttons"></section>
@@ -23,23 +26,25 @@
       </div>
     </article>
   </aside>
-  <div id="confirmPurchase" class="ui modal">
-    <div id="popup" class="ui icon header">
-      <h1>Purchase confirmation</h1>
-    </div>
-    <div id="confirmContent" class="content">
-      <p>Are you sure you want to purchase these items?</p>
-      <p id="confirmItemList"></p>
-      <div>
-        <section><span class="confirmBalanceList">Current balance:</span> <span id="confirmOldBalance">0.00</span></section>
-        <section><span class="confirmBalanceList">Product total:</span> <span id="confirmProductTotal">0.00</span></section>
-        <hr/>
-        <section><span class="confirmBalanceList">New balance:</span> <span id="confirmNewBalance">0.00</span></section>
+  <section>
+    <div class="ui modal confirmPurchase">
+      <div id="popup" class="ui icon header">
+        <h1>Purchase confirmation</h1>
+      </div>
+      <div id="confirmContent" class="content">
+        <p>Are you sure you want to purchase these items?</p>
+        <p id="confirmItemList"></p>
+        <div>
+          <section><span class="confirmBalanceList">Current balance:</span> <span id="confirmOldBalance">0.00</span></section>
+          <section><span class="confirmBalanceList">Product total:</span> <span id="confirmProductTotal">0.00</span></section>
+          <hr/>
+          <section><span class="confirmBalanceList">New balance:</span> <span id="confirmNewBalance">0.00</span></section>
+        </div>
+      </div>
+      <div class="actions">
+        <span id="purchaseConfirmed" class="ui positive button confirmButton">Purchase</span>
+        <span class="ui negative button confirmButton">Cancel</span>
       </div>
     </div>
-    <div class="actions">
-      <span id="purchaseConfirmed" class="ui positive button confirmButton">Purchase</span>
-      <span class="ui negative button confirmButton">Cancel</span>
-    </div>
-  </div>
+  </section>
 </article>

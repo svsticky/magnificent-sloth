@@ -10,16 +10,19 @@ const query = querystring.parse(global.location.search)
 const modules = JSON.parse(query['modules']);
 const uuid = JSON.parse(query['?uuid']);
 
-renderHTML = page => {
+renderHTML = (page, page_type) => {
   page = path.join(__dirname, page);
   const file = fs.readFileSync(page);
-  document.getElementById('content').innerHTML = file;
+  document.getElementById(`${page_type}-page`).innerHTML = file;
 }
 
-renderHomePage = () => {
-  renderHTML(`../../views/products/products.html`, { query: { "uuid": JSON.stringify(uuid) } });
-  products.GetProducts(uuid);
+renderPages = () => {
+  renderHTML(`../../views/products/products.html`, "products");
+  renderHTML(`../../views/funds/funds.html`, "funds");
+  renderHTML(`../../views/activities/activities.html`, "activities");
   cart.ClearCart();
+  products.GetProducts(uuid);
+  document.getElementById("products-page").classList.remove("hidden");
 }
 
 // Check balance each time we switch pages
@@ -39,18 +42,28 @@ document.querySelectorAll('.link').forEach((element) => {
   
   element.addEventListener('click', function (e) {
     url = element.id;
-
     getUserInfo();
 
     switch (url) {
       case "funds":
-        renderHTML(`../../views/funds/funds.html`, {query: {"uuid": JSON.stringify(uuid)}});
+        // Show funds, hide others
+        document.getElementById("products-page").classList.add("hidden");
+        document.getElementById("activities-page").classList.add("hidden");
+        document.getElementById("funds-page").classList.remove("hidden");
         break;
       case "activities":
-        renderHTML(`../../views/activities/activities.html`, {query: {"uuid": JSON.stringify(uuid)}});
+        // Show activities, hide others
+        document.getElementById("products-page").classList.add("hidden");
+        document.getElementById("activities-page").classList.remove("hidden");
+        document.getElementById("funds-page").classList.add("hidden");
         break;
       default:
-        renderHomePage();
+        // Show products, hide others
+        cart.ClearCart();
+        products.GetProducts(uuid);
+        document.getElementById("products-page").classList.remove("hidden");
+        document.getElementById("activities-page").classList.add("hidden");
+        document.getElementById("funds-page").classList.add("hidden");
         break;
     }
   });
@@ -69,6 +82,5 @@ ipcRenderer.on('getUserInfo', (event, arg) => {
   }
 });
 
-
 getUserInfo();
-renderHomePage();
+renderPages();

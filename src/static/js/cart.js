@@ -4,9 +4,10 @@ const querystring = require('querystring');
 let cartList = new Array();
 let cost = 0;
 
-$(document).ready(function() {
-  // Init the div as a modal
-  $('#confirmPurchase').modal();
+document.addEventListener('DOMContentLoaded', e => {
+  document.getElementById('purchase').addEventListener('click', confirmPurchase);
+  document.getElementById('purchaseConfirmed').addEventListener('click', purchase);
+  $('.ui.modal.confirmPurchase').modal('attach events', '#purchase', 'show');
 });
 
 // Puts the given product in the cart or increments it if
@@ -64,9 +65,6 @@ module.exports.RenderCart = () => {
   else {
     document.getElementById('purchase').className = "ui button primary"
   }
-
-  document.getElementById('purchase').addEventListener('click', confirmPurchase);
-  document.getElementById('purchaseConfirmed').addEventListener('click', purchase);
 }
 
 module.exports.ClearCart = () => {
@@ -75,7 +73,8 @@ module.exports.ClearCart = () => {
   module.exports.RenderCart();
 }
 
-function confirmPurchase() {
+function confirmPurchase(e) {
+  e.preventDefault();
   document.getElementById("confirmOldBalance").innerHTML = document.getElementById("balance").innerHTML;
   document.getElementById("confirmProductTotal").innerHTML = "€" + Math.abs(Number(cost)).toFixed(2);
   document.getElementById("confirmNewBalance").innerHTML = document.getElementById("newBalance").innerHTML.split(" ")[2];
@@ -86,7 +85,6 @@ function confirmPurchase() {
     cartElement.className = "cartItem";
     document.getElementById('confirmItemList').append(cartElement);
   }
-  $('#confirmPurchase').modal('show');
 }
 
 // Event for when the user click purchase. Send a request to Koala
