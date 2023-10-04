@@ -52,12 +52,8 @@ module.exports.RenderCart = () => {
 
   let finalCost = Math.abs(Number(cost)).toFixed(2)
   document.getElementById('totalCost').innerHTML = `Cost: €${finalCost}`;
-  if (finalCost > 0) {
-    let balance = parseFloat(document.getElementById('balance').innerHTML.substr(1)) || 0;
-    document.getElementById('newBalance').innerHTML = `New balance: €${Number(balance - finalCost).toFixed(2)}`;
-  } else {
-    document.getElementById('newBalance').innerHTML = null;
-  }
+  let balance = parseFloat(document.getElementById('balance').innerHTML.substr(1)) || 0;
+  document.getElementById('newBalance').innerHTML = `New balance: €${Number(balance - finalCost).toFixed(2)}`;
 
   if (cartList.length === 0 ) {
     document.getElementById('purchase').className = "ui button primary disabled"
