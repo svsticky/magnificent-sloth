@@ -37,22 +37,25 @@ ipcRenderer.on('getProducts', (event, arg) => {
         // Create category HTML
         let category = categories[i];
         let parser = new DOMParser();
+        // A body gets inserted which does something weird with the buttons
         document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
-          `<a class="ui red basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
-        , 'text/html').body);
+          `<a class="ui basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
+        , 'text/html').body.firstChild);
         document.getElementById("productList").append(parser.parseFromString(
           `
-          <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
-          <h1 class="ui horizontal divider header">
-            ${category.name}
-          </h1>
-          <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
+          <article>
+            <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
+            <h1 class="ui horizontal divider header">
+              ${category.name}
+            </h1>
+            <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
+          </article>
           `
-        , 'text/html').body);
-  
-        let products = categories[i].products.sort((a, b) => (a.name > b.name) ? 1 : -1)
+        , 'text/html').body.firstChild);
+
+        let products = category.products.sort((a, b) => (a.name > b.name) ? 1 : -1)
         for (let j = 0; j < products.length; j++) {
-          renderProduct(products[j], categories[i]);
+          renderProduct(products[j], category);
         }
       }
     }

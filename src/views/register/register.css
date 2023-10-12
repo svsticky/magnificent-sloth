@@ -1,5 +1,5 @@
 body {
-	background-color: #61518f;
+	background-color: var(--board-color);
 }
 #title {
   position: relative;

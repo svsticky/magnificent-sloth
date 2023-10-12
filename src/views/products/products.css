@@ -4,10 +4,17 @@
   padding: 20px;
   z-index: 1;
   background-color: #f8f8f4;
+  text-align: center;
+}
+
+#categoryList > section {
+  width: 100%;
 }
 
 .category_button {
   font-size: 20px !important;
+  color: var(--board-color) !important;
+  box-shadow: 0 0 0 1px var(--board-color) inset !important;
 }
 
 #productList {
@@ -28,6 +35,7 @@
 
 #purchase {
   width: 100%;
+  background-color: var(--board-color);
 }
 
 #cartTitle {

@@ -1,10 +1,11 @@
 body {
-  background-color: #61518f;
+  background-color: var(--board-color);
 }
 
 #logo {
   display: block;
 }
+
 #description{
   text-align: center;
   color: #ffffff;
