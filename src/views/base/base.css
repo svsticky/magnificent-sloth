@@ -8,7 +8,7 @@ body {
 .menu {
 	height: 100px;
 	margin-bottom: 0 !important;
-	background-color: #61518f !important;
+	background-color: var(--board-color) !important;
 }
 
 .menu > span {
@@ -38,7 +38,6 @@ body {
 }
 
 /* Default components */
-
 main {
 	height: calc(100% - 100px);
 	position: relative;
