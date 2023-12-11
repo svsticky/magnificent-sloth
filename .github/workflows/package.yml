@@ -2,18 +2,15 @@ name: "Build and ship package"
 
 on:
   push:
-    branches:
-      - "maartenberg/ship-on-tag"
-      - "development"
     tags:
       - "v*"
 
 jobs:
   build:
     runs-on: "ubuntu-latest"
-
     steps:
-    - uses: "actions/checkout@v2"
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: "Use appropriate Node.js"
       uses: "actions/setup-node@v2"
@@ -33,15 +30,14 @@ jobs:
         name: "package"
         path: "dist/installers/*.deb"
 
-    - run: "mkdir -p ~/.ssh"
-    - run: "echo \"$sshkey\" > ~/.ssh/id_ed25519"
+    - name: Create release
+      uses: softprops/action-gh-release@v1
       env:
-        sshkey: "${{ secrets.FREIGHT_KEY_PROD }}"
-
-    - run: "chmod 0600 ~/.ssh/id_ed25519"
-
-    - name: "Copy package to server"
-      run: "scp -o StrictHostKeyChecking=no dist/installers/*.deb freight@svsticky.nl:/tmp/new_sloth.deb"
-
-    - name: "Add package to freight"
-      run: "ssh -o StrictHostKeyChecking=no freight@svsticky.nl <<< 'freight add /tmp/new_sloth.deb apt/focal; freight cache; rm -v /tmp/new_sloth.deb'"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        files: |
+          dist/installers/*.deb
