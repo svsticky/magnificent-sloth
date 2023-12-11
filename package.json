@@ -1,6 +1,6 @@
 {
   "name": "magnificent-sloth",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Point of Sale for Dead Mongoose",
   "main": "main.js",
   "maintainers": [
