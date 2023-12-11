@@ -62,3 +62,4 @@ The repository supports building a deb-package to be able to install the app on 
 The deb-package can be found in dist/installers.
 
 When the deb-package is installed and opened via gnome, the application expects the environment file to be in `/home/$USERNAME`. Make sure you copy `sample.env` to this location, rename it to `.env`, and update its values.
+You can also just run `source .env` to add your environment variables to the current shell session. Add it to your `.bashrc` to make it permanent.
