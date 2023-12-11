@@ -15,15 +15,18 @@ jobs:
     - name: "Use appropriate Node.js"
       uses: "actions/setup-node@v3"
       with:
-        node-version: "17.0.1"
+        node-version: "14.18.1"
         cache: 'npm'
 
-    - run: "sudo apt install libpcsclite-dev openssl"
+    - run: "sudo apt install pcscd libpcsclite1 libpcsclite-dev openssl"
 
     # Install packages, rebuild using electron
     - run: "npm install"
+    - run: "npm install @pokusew/pcsclite --build-from-source"
     - run: "./node_modules/.bin/electron-rebuild"
 
+    # Build
+    - run: "npm run build-semantic"
     - run: "npm run build"
 
     - name: "Upload package"
