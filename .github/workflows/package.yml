@@ -18,9 +18,11 @@ jobs:
         node-version: "17.0.1"
         cache: 'npm'
 
-    - run: "sudo apt install libpcsclite-dev"
+    - run: "sudo apt install libpcsclite-dev openssl"
 
+    # Install packages, rebuild using electron
     - run: "npm install"
+    - run: "./node_modules/.bin/electron-rebuild"
 
     - run: "npm run build"
 
