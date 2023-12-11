@@ -15,7 +15,7 @@ jobs:
     - name: "Use appropriate Node.js"
       uses: "actions/setup-node@v2"
       with:
-        node-version: "14.18.1"
+        node-version: "17.0.1"
         cache: 'npm'
 
     - run: "sudo apt install libpcsclite-dev"
