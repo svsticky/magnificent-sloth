@@ -1,13 +1,10 @@
 body {
-  background-color: var(--board-color);
-}
-
-#logo {
-  display: block;
-}
-
-#description{
-  text-align: center;
-  color: #ffffff;
-  font-size: 50px;
+  background-image: url("./bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
