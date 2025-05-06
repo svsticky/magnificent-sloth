@@ -1,5 +1,17 @@
 body {
   background-color: var(--board-color);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+main {
+  height: 100vh;
+  display: grid;
+}
+
+article {
+  margin: auto;
 }
 
 #logo {
