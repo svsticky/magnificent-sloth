@@ -145,6 +145,8 @@ ipcRenderer.on('purchase', (event, arg) => {
       module.exports.ClearCart();
       let sound = new Audio('../../static/audio/money.mp3');
       sound.play();
+
+      setTimeout(() => sound.pause(), 10000);
     }
   }
 });

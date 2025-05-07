@@ -20,7 +20,7 @@ module.exports.HandleAuthNFC = async (win) => {
         return;
       }
 
-      player.play('../src/static/audio/hello.mp3', function (err) {
+      player.play('src/static/audio/hello.mp3', function (err) {
         if (err) throw err
       });
 
