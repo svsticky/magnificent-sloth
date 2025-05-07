@@ -12,12 +12,13 @@ help:
 
 .PHONY: build
 build:
+	rm -rf ./dist
 	npm run build --overwrite
 
 .PHONY: install
 install: build
 	sudo apt install ./dist/installers/*.deb --reinstall
 
-.PHONY: build
+.PHONY: restart
 restart:
 	sudo systemctl restart sway@tty1.service
