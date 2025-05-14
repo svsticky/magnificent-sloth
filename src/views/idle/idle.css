@@ -8,10 +8,27 @@ body {
 main {
   height: 100vh;
   display: grid;
+  text-align: center;
 }
 
 article {
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center children */
+  justify-content: center; /* Vertically center if needed */
+}
+
+#opwaarderen {
+  background-color: #ffffff;
+    border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#qr-code {
+  padding: 10px;
 }
 
 #logo {
