@@ -12,7 +12,8 @@ help:
 
 .PHONY: build
 build:
-	npm run build --overwrite
+	yes | rm -fr ./dist
+	npm run build
 
 .PHONY: install
 install: build
