@@ -17,7 +17,7 @@ fetch:
 
 .PHONY: build
 build: fetch
-	rm -rf ./dist
+	yes | rm -fr ./dist
 	npm run build
 
 .PHONY: install
