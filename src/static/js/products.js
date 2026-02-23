@@ -21,6 +21,28 @@ module.exports.GetProducts = (uuid) => {
   // })
 }
 
+module.exports.ToggleFavorite = (productId, uuid) => {
+  ipcRenderer.send('request', {
+    name: 'toggleFavorite',
+    type: 'POST',
+    url: 'api/favorite/toggle', 
+    body: {
+      product_id: productId,
+      uuid: uuid
+    }
+  });
+}
+
+ipcRenderer.on('toggleFavorite', (event, arg) => {
+  if (arg.err !== null) {
+    console.error("Favoriet togglen mislukt:", arg.err);
+  } else {
+    const urlParams = new URLSearchParams(window.location.search);
+    const uuid = urlParams.get('uuid'); 
+    module.exports.GetProducts(uuid);
+  }
+});
+
 // When we receive the data from Koala, render these
 // through the renderProduct function.
 ipcRenderer.on('getProducts', (event, arg) => {
@@ -82,6 +104,15 @@ function renderProduct(prod, category, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
+
+  let favBtn = html.getElementsByClassName('favorite-icon')[0]; 
+  if (favBtn) {
+    favBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const urlParams = new URLSearchParams(window.location.search);
+      module.exports.ToggleFavorite(prod.id, urlParams.get('uuid'));
+    });
+  }
 
   html.className = 'column';
   html.innerHTML = product;

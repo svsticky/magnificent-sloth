@@ -75,3 +75,25 @@
 .ui.modal>.actions {
   text-align: center;
 }
+
+.favorite-icon {
+  position: absolute !important;
+  right: 10px;
+  top: 10px;
+  z-index: 2;
+  font-size: 1.5em !important;
+  color: rgba(255, 255, 255, 0.7); 
+  text-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.1s ease, color 0.1s ease;
+}
+
+.favorite-icon:hover {
+  transform: scale(1.2);
+  color: #f2c612 !important;
+}
+
+article[id^="⭐"] .favorite-icon, 
+section[id="⭐"] .favorite-icon {
+    color: #f2c612 !important;
+}
