@@ -35,7 +35,7 @@ module.exports.ToggleFavorite = (productId, uuid) => {
 
 ipcRenderer.on('toggleFavorite', (event, arg) => {
   if (arg.err !== null) {
-    console.error("Favoriet togglen mislukt:", arg.err);
+    console.error("Failed to toggle favourite:", arg.err);
   } else {
     const urlParams = new URLSearchParams(window.location.search);
     const uuid = urlParams.get('uuid'); 
