@@ -102,28 +102,31 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // Renders the block for each product.
 function renderProduct(prod, category, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
-  let product = fs.readFileSync(page);
+  let productTemplate = fs.readFileSync(page);
   let html = document.createElement('article');
 
-  let favBtn = html.getElementsByClassName('favorite-icon')[0]; 
+  html.className = 'column';
+  html.innerHTML = productTemplate;
+
+  let favBtn = html.querySelector('.favorite-icon'); 
   if (favBtn) {
     favBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       const urlParams = new URLSearchParams(window.location.search);
       module.exports.ToggleFavorite(prod.id, urlParams.get('uuid'));
+      console.log("Favorite clicked for product:", prod.id); 
     });
   }
 
-  html.className = 'column';
-  html.innerHTML = product;
-  html.getElementsByClassName('name')[0].innerHTML = prod.name
-  html.getElementsByClassName('category')[0].innerHTML = category.name
-  html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
+  html.getElementsByClassName('name')[0].innerHTML = prod.name;
+  html.getElementsByClassName('category')[0].innerHTML = category.name;
+  html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`;
+  
   if (prod.image_url) {
-    html.getElementsByClassName('productImage')[0].src = prod.image_url
+    html.getElementsByClassName('productImage')[0].src = prod.image_url;
   }
+
   html.addEventListener("click", () => { AddToCart(prod) });
 
-  // document.getElementById(recent ? 'recentList' : prod.category).append(html);
   document.getElementById(category.name.toLowerCase()).append(html);
 }
