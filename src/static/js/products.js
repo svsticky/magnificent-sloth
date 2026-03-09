@@ -33,6 +33,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
     let categories = JSON.parse(arg.data);
+    let favorites = categories[0].products.map(it => it.id);
     if (categories && categories.length > 0) {
       for (let i = 0; i < categories.length; i++) {
         // Create category HTML
@@ -42,7 +43,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
         document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
           `<a class="ui basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
         , 'text/html').body.firstChild);
-        document.getElementById("productList").append(parser.parseFromString(
+        const categoryElem = parser.parseFromString(
           `
           <article>
             <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
@@ -52,11 +53,13 @@ ipcRenderer.on('getProducts', (event, arg) => {
             <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
           </article>
           `
-        , 'text/html').body.firstChild);
+        , 'text/html').body.firstChild;
+        categoryElem.style.display = category.products.length == 0 ? "none" : "block";
+        document.getElementById("productList").append(categoryElem);
 
         let products = category.products.sort((a, b) => (a.name > b.name) ? 1 : -1)
         for (let j = 0; j < products.length; j++) {
-          renderProduct(products[j], category);
+          renderProduct(products[j], category, favorites.includes(products[j].id));
         }
       }
     }
@@ -79,7 +82,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // });
 
 // Renders the block for each product.
-function renderProduct(prod, category, recent = false) {
+function renderProduct(prod, category, isFavorite, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
@@ -95,6 +98,8 @@ function renderProduct(prod, category, recent = false) {
   html.addEventListener("click", () => { AddToCart(prod) });
 
   const favoriteButton = html.getElementsByClassName('favorite-overlay')[0];
+
+  favoriteButton.innerText = isFavorite ? "⭐" : "☆";
 
   favoriteButton.addEventListener('click', (event) => {
     event.stopPropagation();

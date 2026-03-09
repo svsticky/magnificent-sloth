@@ -25,20 +25,24 @@ ipcRenderer.on('addFavorite', (event, arg) => {
     return;
   }
 
-  // TODO make products move when you add them to favs
   let res = JSON.parse(arg.data);
 
   const products = document.querySelectorAll(`[data-product-id="${res.product_id}"]`);
-  const favoriteCategory = document.querySelector('#productList > article > section#⭐');
+  const favoriteCategory = document.querySelector('#productList > article > section');
 
   switch (res.status) {
     case "removed":
+      products.forEach(it => it.querySelector(".favorite-overlay").innerText = "☆");
       const child = favoriteCategory.querySelector(`[data-product-id="${res.product_id}"]`);
       favoriteCategory.removeChild(child);
+
+      if (favoriteCategory.childNodes.length == 0) favoriteCategory.parentNode.style.display = "none";
       break;
     case "added":
       if (favoriteCategory == null) break;
+      if (favoriteCategory.childNodes.length == 0) favoriteCategory.parentNode.style.display = "block";
 
+      products.forEach(it => it.querySelector(".favorite-overlay").innerText = "⭐");
       const newProduct = products[0].cloneNode(true);
       const favoriteButton = newProduct.getElementsByClassName('favorite-overlay')[0];
       favoriteButton.addEventListener('click', (event) => {
