@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
+const { AddToFavorites } = require('./favorite.js');
 const querystring = require('querystring');
 
 module.exports.GetProducts = (uuid) => {
@@ -32,6 +33,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
     let categories = JSON.parse(arg.data);
+    let favorites = categories[0].products.map(it => it.id);
     if (categories && categories.length > 0) {
       for (let i = 0; i < categories.length; i++) {
         // Create category HTML
@@ -41,7 +43,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
         document.getElementById("categoryList").firstElementChild.append(parser.parseFromString(
           `<a class="ui basic button category_button" href="#${category.name.toLowerCase()}_header">${category.name}</a>`
         , 'text/html').body.firstChild);
-        document.getElementById("productList").append(parser.parseFromString(
+        const categoryElem = parser.parseFromString(
           `
           <article>
             <a class="category_headers" id="${category.name.toLowerCase()}_header"></a>
@@ -51,11 +53,13 @@ ipcRenderer.on('getProducts', (event, arg) => {
             <section id="${category.name.toLowerCase()}" class="ui five column grid products"></section>
           </article>
           `
-        , 'text/html').body.firstChild);
+        , 'text/html').body.firstChild;
+        categoryElem.style.display = category.products.length == 0 ? "none" : "block";
+        document.getElementById("productList").append(categoryElem);
 
         let products = category.products.sort((a, b) => (a.name > b.name) ? 1 : -1)
         for (let j = 0; j < products.length; j++) {
-          renderProduct(products[j], category);
+          renderProduct(products[j], category, favorites.includes(products[j].id));
         }
       }
     }
@@ -78,20 +82,29 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // });
 
 // Renders the block for each product.
-function renderProduct(prod, category, recent = false) {
+function renderProduct(prod, category, isFavorite, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
 
   html.className = 'column';
   html.innerHTML = product;
+  html.dataset.productId = prod.id;
   html.getElementsByClassName('name')[0].innerHTML = prod.name
-  html.getElementsByClassName('category')[0].innerHTML = category.name
   html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
   if (prod.image_url) {
     html.getElementsByClassName('productImage')[0].src = prod.image_url
   }
   html.addEventListener("click", () => { AddToCart(prod) });
+
+  const favoriteButton = html.getElementsByClassName('favorite-overlay')[0];
+
+  favoriteButton.innerText = isFavorite ? "⭐" : "☆";
+
+  favoriteButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    AddToFavorites(html, prod.id);
+  });
 
   // document.getElementById(recent ? 'recentList' : prod.category).append(html);
   document.getElementById(category.name.toLowerCase()).append(html);

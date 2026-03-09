@@ -10,6 +10,8 @@ const query = querystring.parse(global.location.search)
 const modules = JSON.parse(query['modules']);
 const uuid = JSON.parse(query['?uuid']);
 
+window.uuid = uuid;
+
 renderHTML = (page, page_type) => {
   page = path.join(__dirname, page);
   const file = fs.readFileSync(page);
