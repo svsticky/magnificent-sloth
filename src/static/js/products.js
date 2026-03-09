@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
+const { AddToFavorites } = require('./favorite.js');
 const querystring = require('querystring');
 
 module.exports.GetProducts = (uuid) => {
@@ -85,13 +86,20 @@ function renderProduct(prod, category, recent = false) {
 
   html.className = 'column';
   html.innerHTML = product;
+  html.dataset.productId = prod.id;
   html.getElementsByClassName('name')[0].innerHTML = prod.name
-  html.getElementsByClassName('category')[0].innerHTML = category.name
   html.getElementsByClassName('price')[0].innerHTML = `€${Number(prod.price).toFixed(2)}`
   if (prod.image_url) {
     html.getElementsByClassName('productImage')[0].src = prod.image_url
   }
   html.addEventListener("click", () => { AddToCart(prod) });
+
+  const favoriteButton = html.getElementsByClassName('favorite-overlay')[0];
+
+  favoriteButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    AddToFavorites(html, prod.id);
+  });
 
   // document.getElementById(recent ? 'recentList' : prod.category).append(html);
   document.getElementById(category.name.toLowerCase()).append(html);
