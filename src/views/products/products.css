@@ -60,6 +60,11 @@
 .favorite-overlay {
   font-size: 2em;
 }
+/* fix for consistency of emoji size */
+.favorite-overlay.favorited {
+  font-size: 1.5em;
+  padding-top: 3px;
+}
 
 .cartSection {
   height: 340px; 

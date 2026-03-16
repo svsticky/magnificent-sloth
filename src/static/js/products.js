@@ -2,7 +2,6 @@ const { ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { AddToCart } = require('./cart.js');
-const { AddToFavorites } = require('./favorite.js');
 const querystring = require('querystring');
 
 module.exports.GetProducts = (uuid) => {
@@ -29,9 +28,10 @@ ipcRenderer.on('getProducts', (event, arg) => {
   document.getElementById("productList").innerHTML = "";
 
   if (arg.err !== null) {
-    console.error(arg.err);
+    console.error(arg.statusCode, arg.err);
     document.getElementById('productList').innerHTML = "Something went wrong while requesting data from Koala. Please try again later."
   } else {
+    if (arg.data === null) return;
     let categories = JSON.parse(arg.data);
     let favorites = categories[0].products.map(it => it.id);
     if (categories && categories.length > 0) {
@@ -59,7 +59,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 
         let products = category.products.sort((a, b) => (a.name > b.name) ? 1 : -1)
         for (let j = 0; j < products.length; j++) {
-          renderProduct(products[j], category, favorites.includes(products[j].id));
+          renderProduct(products[j], category.name, favorites.includes(products[j].id));
         }
       }
     }
@@ -82,7 +82,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // });
 
 // Renders the block for each product.
-function renderProduct(prod, category, isFavorite, recent = false) {
+function renderProduct(prod, categoryName, isFavorite, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
@@ -101,11 +101,83 @@ function renderProduct(prod, category, isFavorite, recent = false) {
 
   favoriteButton.innerText = isFavorite ? "⭐" : "☆";
 
+  if (isFavorite) favoriteButton.classList.add("favorited");
+
   favoriteButton.addEventListener('click', (event) => {
     event.stopPropagation();
-    AddToFavorites(html, prod.id);
+    addToFavorites(html, prod.id);
   });
 
   // document.getElementById(recent ? 'recentList' : prod.category).append(html);
-  document.getElementById(category.name.toLowerCase()).append(html);
+  document.getElementById(categoryName.toLowerCase()).append(html);
 }
+
+function addToFavorites (htmlElem, productId) {
+  ipcRenderer.send('request', {
+    name: 'addFavorite',
+    type: 'POST',
+    url: `api/favorite/toggle`,
+    body: {product_id: productId, uuid: window.uuid}
+  });
+}
+
+ipcRenderer.on('addFavorite', (event, arg) => {
+  if (arg.err == null && arg.data == null) return;
+
+  if (arg.err !== null) {
+    console.error(arg.err);
+    $('body').toast({
+      class: 'error',
+      message: "Favoriting failed, please try again!"
+    });
+    let errSound = new Audio('../../static/audio/error.mp3');
+    errSound.play();
+    return;
+  }
+
+  let res = JSON.parse(arg.data);
+
+  const products = document.querySelectorAll(`[data-product-id="${res.product_id}"]`);
+  const favoriteCategory = document.querySelector('#productList > article > section');
+
+  switch (res.status) {
+    case "removed":
+      products.forEach(it => {
+        const el = it.querySelector(".favorite-overlay");
+        el.innerText = "☆";
+        el.classList.remove("favorited")
+      });
+
+      const child = favoriteCategory.querySelector(`[data-product-id="${res.product_id}"]`);
+      favoriteCategory.removeChild(child);
+
+      if (favoriteCategory.childNodes.length == 0) favoriteCategory.parentNode.style.display = "none";
+      break;
+    case "added":
+      if (favoriteCategory == null) break;
+      if (favoriteCategory.childNodes.length == 0) favoriteCategory.parentNode.style.display = "block";
+
+      products.forEach(it => {
+        const el = it.querySelector(".favorite-overlay");
+        el.innerText = "⭐";
+        el.classList.add("favorited")
+      });
+
+      const prod = products[0];
+      renderProduct({
+        id: prod.dataset.productId,
+        name: prod.querySelector('#productName').innerHTML,
+        price: prod.querySelector('.price').innerHTML.slice(1),
+        image_url: prod.querySelector('img.productImage').src
+      }, "⭐", true)
+      break;
+    default:
+      $('body').toast({
+        class: 'error',
+        message: "Favoriting failed, please try again!"
+      });
+      let errSound = new Audio('../../static/audio/error.mp3');
+      errSound.play();
+      break;
+  }
+});
