@@ -82,7 +82,7 @@ ipcRenderer.on('getProducts', (event, arg) => {
 // });
 
 // Renders the block for each product.
-function renderProduct(prod, categoryName, isFavorite, recent = false) => {
+function renderProduct(prod, categoryName, isFavorite, recent = false) {
   let page = path.join(__dirname, '../../views/products/product.html');
   let product = fs.readFileSync(page);
   let html = document.createElement('article');
@@ -100,6 +100,8 @@ function renderProduct(prod, categoryName, isFavorite, recent = false) => {
   const favoriteButton = html.getElementsByClassName('favorite-overlay')[0];
 
   favoriteButton.innerText = isFavorite ? "⭐" : "☆";
+
+  if (isFavorite) favoriteButton.classList.add("favorited");
 
   favoriteButton.addEventListener('click', (event) => {
     event.stopPropagation();
@@ -140,7 +142,12 @@ ipcRenderer.on('addFavorite', (event, arg) => {
 
   switch (res.status) {
     case "removed":
-      products.forEach(it => it.querySelector(".favorite-overlay").innerText = "☆");
+      products.forEach(it => {
+        const el = it.querySelector(".favorite-overlay");
+        el.innerText = "☆";
+        el.classList.remove("favorited")
+      });
+
       const child = favoriteCategory.querySelector(`[data-product-id="${res.product_id}"]`);
       favoriteCategory.removeChild(child);
 
@@ -150,7 +157,11 @@ ipcRenderer.on('addFavorite', (event, arg) => {
       if (favoriteCategory == null) break;
       if (favoriteCategory.childNodes.length == 0) favoriteCategory.parentNode.style.display = "block";
 
-      products.forEach(it => it.querySelector(".favorite-overlay").innerText = "⭐");
+      products.forEach(it => {
+        const el = it.querySelector(".favorite-overlay");
+        el.innerText = "⭐";
+        el.classList.add("favorited")
+      });
 
       const prod = products[0];
       renderProduct({
