@@ -70,3 +70,23 @@ The deb-package can be found in dist/installers.
 
 When the deb-package is installed and opened via gnome, the application expects the environment file to be in `/home/$USERNAME`. Make sure you copy `sample.env` to this location, rename it to `.env`, and update its values.
 You can also just run `source .env` to add your environment variables to the current shell session. Add it to your `.bashrc` to make it permanent.
+
+
+### Deploying
+
+To deploy, run the following commands on ragecage:
+
+```sh
+cd /home/ragecage/magnificent-sloth
+git pull
+
+rm -rf dist
+npm run build-semantic
+npm run build
+
+sudo dpkg -i --force-overwrite dist/installers/magnificent-sloth_1.0.0_and64.deb
+
+# The package is now installed and the new version
+# of Sloth will be started when ragecage reboots:
+reboot
+```
