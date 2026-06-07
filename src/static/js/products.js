@@ -95,7 +95,27 @@ function renderProduct(prod, categoryName, isFavorite, recent = false) {
   if (prod.image_url) {
     html.getElementsByClassName('productImage')[0].src = prod.image_url
   }
-  html.addEventListener("click", () => { AddToCart(prod) });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+
+  html.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchMoved = false;
+  }, { passive: true });
+
+  html.addEventListener('touchmove', (e) => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (dx > 8 || dy > 8) touchMoved = true;
+  }, { passive: true });
+
+  html.addEventListener("click", () => {
+    if (touchMoved) return;
+    AddToCart(prod);
+  });
 
   const favoriteButton = html.getElementsByClassName('favorite-overlay')[0];
 
