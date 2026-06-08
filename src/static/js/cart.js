@@ -88,6 +88,7 @@ function confirmPurchase(e) {
 function purchase() {
   if (document.getElementById("confirmNewBalance").innerHTML.indexOf("-") != -1) {
     let errSound = new Audio('../../static/audio/error.mp3');
+    errSound.volume = 1;
     errSound.play();
     $('body').toast({
       class: 'error',
