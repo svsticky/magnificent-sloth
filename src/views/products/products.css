@@ -114,5 +114,5 @@
 }
 
 .content a:hover {
-  color: #b21b21 !important;
+  color: var(--board-color) !important;
 }
