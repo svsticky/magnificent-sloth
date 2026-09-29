@@ -92,3 +92,30 @@
 .ui.modal>.actions {
   text-align: left;
 }
+
+.productImageContainer {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(60, 60, 60, 0.1);
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  margin: auto 0;
+  object-fit: contain;
+}
+
+.content {
+  width: 100%;
+  height: 40%;
+  min-height: 167px;
+}
+
+.content a:hover {
+  color: var(--board-color) !important;
+}
