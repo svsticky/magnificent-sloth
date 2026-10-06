@@ -57,7 +57,9 @@ ipcRenderer.on('getProducts', (event, arg) => {
         categoryElem.style.display = category.products.length == 0 ? "none" : "block";
         document.getElementById("productList").append(categoryElem);
 
-        let products = category.products.sort((a, b) => (a.name > b.name) ? 1 : -1)
+        let products = category.name === "🕒"
+          ? category.products
+          : category.products.sort((a, b) => (a.name > b.name) ? 1 : -1);
         for (let j = 0; j < products.length; j++) {
           renderProduct(products[j], category.name, favorites.includes(products[j].id));
         }
