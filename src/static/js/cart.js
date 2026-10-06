@@ -3,6 +3,7 @@ const querystring = require('querystring');
 
 let cartList = new Array();
 let cost = 0;
+const ChipiChapa_ID = 26;
 
 document.addEventListener('DOMContentLoaded', e => {
   document.getElementById('purchase').addEventListener('click', confirmPurchase);
@@ -67,6 +68,24 @@ module.exports.ClearCart = () => {
   cartList = new Array();
   cost = 0;
   module.exports.RenderCart();
+}
+
+function playChipiChapaSound() {
+  const boughtChipiChapa = cartList.some(product =>
+    Number(product.id) === ChipiChapa_ID
+  );
+
+  if (!boughtChipiChapa) {
+    return;
+  }
+
+  const chipiChapaSound = new Audio(
+    '../../static/audio/ChipiChapa.mp3'
+  );
+
+  chipiChapaSound.play().catch(error => {
+    console.error('Could not play ChipiChapa sound:', error);
+  });
 }
 
 function confirmPurchase(e) {
@@ -142,10 +161,13 @@ ipcRenderer.on('purchase', (event, arg) => {
     if (res) {
       let newBalance = parseFloat(res.balance).toFixed(2);
       document.getElementById('balance').innerHTML = `€${newBalance}`
+
+      playChipiChapaSound();
+
       module.exports.ClearCart();
+
       let sound = new Audio('../../static/audio/money.mp3');
       sound.play();
-
       setTimeout(() => sound.pause(), 10000);
     }
   }
