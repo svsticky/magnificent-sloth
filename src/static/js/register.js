@@ -6,7 +6,7 @@ const studentInput = document.querySelector(".studentinput");
 // Init the div as a modal
 $('.ui.basic.modal').modal();
 
-let query = querystring.parse(global.location.search)
+let query = querystring.parse(window.location.search)
 let uuid = null;
 if (Object.keys(query).length != 0) {
   uuid = JSON.parse(query['?uuid']);

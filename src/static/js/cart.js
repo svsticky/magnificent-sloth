@@ -174,5 +174,5 @@ ipcRenderer.on('purchase', (event, arg) => {
   }
 });
 
-let query = querystring.parse(global.location.search)
+let query = querystring.parse(window.location.search)
 let uuid = JSON.parse(query['?uuid']);

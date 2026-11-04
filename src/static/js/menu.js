@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 let url = "products";
 
-const query = querystring.parse(global.location.search)
+const query = querystring.parse(window.location.search)
 const modules = JSON.parse(query['modules']);
 const uuid = JSON.parse(query['?uuid']);
 

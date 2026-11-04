@@ -1,18 +1,31 @@
-const { globalShortcut } = require('electron');
+const { Menu, MenuItem } = require('electron');
 const { CardOn, ClearBasket } = require('./handle_state');
 
-module.exports.HandleAuthDev = async (win) => {
-  globalShortcut.register('Ctrl+1', () => {
-    CardOn(win, process.env.TEST_UUID, process.env.MODULES);
-  });
-
-  globalShortcut.register('Ctrl+2', () => {
-    ClearBasket();
-    win.loadFile('src/views/idle/idle.html')
-  });
-
-  globalShortcut.register('Ctrl+3', () => {
-    ClearBasket();
-    win.loadFile('src/views/register/register.html')
-  });
+module.exports.HandleAuthDev = async (win, menu) => {
+  const submenu = Menu.buildFromTemplate([
+    {
+      label: 'Products',
+      click: () => CardOn(win, process.env.TEST_UUID, process.env.MODULES),
+      accelerator: 'Ctrl+1'
+    },
+    {
+      label: 'Idle',
+      click: () => {
+        ClearBasket();
+        win.loadFile('src/views/idle/idle.html')
+      },
+      accelerator: 'Ctrl+2'
+    },
+    {
+      label: 'Register',
+      click: () => {
+        ClearBasket();
+        win.loadFile('src/views/register/register.html')
+      },
+      accelerator: 'Ctrl+3'
+    },
+  ])
+  console.log("Set shortcuts!");
+  menu.append(new MenuItem({ label: 'Sloth', submenu }))
+  Menu.setApplicationMenu(menu)
 };

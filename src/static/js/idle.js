@@ -1,5 +1,5 @@
 const querystring = require('querystring');
-const query = querystring.parse(global.location.search);
+const query = querystring.parse(window.location.search);
 
 if (Object.keys(query).length != 0) {
   const message = query['?error'];

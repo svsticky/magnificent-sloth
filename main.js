@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const { Request } = require('./modules/api');
 const { HandleAuthNFC } = require('./modules/nfc');
 const { HandleAuthDev } = require('./modules/dev_auth');
@@ -15,7 +15,6 @@ function createWindow() {
     }
   });
 
-  win.removeMenu();
   win.loadFile('src/views/idle/idle.html');
 
   // Switch back to idle if register finished
@@ -24,10 +23,16 @@ function createWindow() {
   });
 
   // Handle NFC authentication
-  if (process.env.SLOTH_ENV ? process.env.SLOTH_ENV.trim() === "dev" : false) {
+  const isDevEnvironment = process.env.SLOTH_ENV ?
+    process.env.SLOTH_ENV.trim() === "dev" :
+    false;
+  
+  if (isDevEnvironment) {
     win.webContents.openDevTools();
-    HandleAuthDev(win);
+    const menu = new Menu();
+    HandleAuthDev(win, menu);
   } else {
+    win.removeMenu(); // TODO
     HandleAuthNFC(win);
   }
 }
