@@ -25,7 +25,6 @@ module.exports.HandleAuthDev = async (win, menu) => {
       accelerator: 'Ctrl+3'
     },
   ])
-  console.log("Set shortcuts!");
   menu.append(new MenuItem({ label: 'Sloth', submenu }))
   Menu.setApplicationMenu(menu)
 };

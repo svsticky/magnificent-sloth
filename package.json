@@ -9,13 +9,15 @@
   "scripts": {
     "start": "./node_modules/.bin/electron-rebuild && electron .",
     "build-semantic": "cd ./src/semantic && npx gulp build",
-    "build": "electron-packager . magnificent-sloth --platform=linux --arch=x64 --out dist && electron-installer-debian --src dist/magnificent-sloth-linux-x64/ --dest dist/installers/ --arch amd64"
+    "build-deb": "electron-packager . magnificent-sloth --platform=linux --arch=x64 --out dist --overwrite && electron-installer-debian --src dist/magnificent-sloth-linux-x64/ --dest dist/installers/ --arch amd64",
+    "build": "cd ./src/semantic && npx gulp build && electron-builder"
   },
   "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@electron/rebuild": "^4.2.1",
     "electron": "^45.2.2",
     "electron-installer-debian": "^4.0.0",
-    "@electron/packager": "^20.3.0",
-    "@electron/rebuild": "^4.2.1"
+    "electron-builder": "^26.18.0"
   },
   "author": "",
   "license": "MIT",
@@ -28,4 +30,3 @@
     "play-sound": "^1.1.6"
   }
 }
-

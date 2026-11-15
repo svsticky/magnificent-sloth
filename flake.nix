@@ -8,29 +8,31 @@
     system: let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       lib = pkgs.lib;
+
+      dependencies = with pkgs; [
+        alsa-lib
+        at-spi2-core
+        cairo
+        cups
+        dbus
+        expat
+        gdk-pixbuf
+        glib
+        gtk3
+        libdrm
+        libgbm
+        libxcomposite
+        libxdamage
+        libxfixes
+        libxrandr
+        libxshmfence
+        nspr
+        nss
+        pango
+      ];
     in {
       devShells.default = pkgs.mkShell {
-        LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath [
-          alsa-lib
-          at-spi2-core
-          cairo
-          cups
-          dbus
-          expat
-          gdk-pixbuf
-          glib
-          gtk3
-          libdrm
-          libgbm
-          libxcomposite
-          libxdamage
-          libxfixes
-          libxrandr
-          libxshmfence
-          nspr
-          nss
-          pango
-        ];
+        LD_LIBRARY_PATH = lib.makeLibraryPath dependencies;
 
         NIX_CFLAGS_COMPILE = "-I${pkgs.pcsclite.dev}/include/PCSC";
 
@@ -40,34 +42,34 @@
         ];
       };
 
-      # packages.default = let
-      # in pkgs.buildNpmPackage {
-      #   pname = "magnificent-sloth";
-      #   version = "1.0.0";
+      packages.default = let
+        fs = lib.fileset;
+        sourceFiles = fs.gitTracked ./.;
+      in pkgs.buildNpmPackage {
+        NIX_CFLAGS_COMPILE = "-I${pkgs.pcsclite.dev}/include/PCSC";
 
-      #   src = ./.;
+        pname = "magnificent-sloth";
+        version = "1.0.0";
+        src = fs.toSource {
+          root = ./.;
+          fileset = sourceFiles;
+        };
 
-      #   npmDepsHash = "sha256-ZnF2gCPBmDCANcm2tUs+O2KpgwZpC1EgcEfl4EwdMjY=";
+        npmDepsHash = "sha256-aOtWsYo8b2F19/O3BkmAEPkzfRjpkjQB63Cl+nWNLQQ=";
 
-      #   nativeBuildInputs = [
-      #     pkgs.nodejs_26
-      #   ];
+        nativeBuildInputs = with pkgs; [
+          nodejs_26
+          gnumake
+        ];
 
-      #   buildPhase = ''
-      #     runHook preBuild
+        buildInputs = dependencies ++ [pkgs.pcsclite];
 
-      #     npm run build-semantic
-      #     npm run build
-
-      #     runHook postBuild
-      #   '';
-
-      #   installPhase = ''
-      #     mkdir -p $out
-      #     # Replace this with the actual files your application produces.
-      #     cp -r dist $out/
-      #   '';
-      # };
+        postInstall = ''
+          echo foobar
+          mv dist/linux-unpacked/magnificent-sloth $out/bin
+          cp -r dist/linux-unpacked/ $out/share
+        '';
+      };
     }
   );
 }
