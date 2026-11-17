@@ -24,7 +24,10 @@ module.exports.Request = async (type, url, reqBody, callback) => {
         return;
       });
     } else {
-      callback(response.statusMessage, null, response.statusCode);
+      // Pass the error body along, so callers can tell errors with the same status apart.
+      let body = '';
+      response.on('data', (data) => body += Buffer.from(data).toString());
+      response.on('end', () => callback(response.statusMessage, body, response.statusCode));
       return;
     }
 
