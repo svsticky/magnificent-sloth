@@ -174,5 +174,80 @@ ipcRenderer.on('purchase', (event, arg) => {
   }
 });
 
+// Barcode scanner support. A USB scanner behaves like a keyboard that types
+// the barcode very quickly followed by Enter. Keystrokes are only observed
+// (never prevented), and anything slower than a scanner is ignored, so
+// normal typing is unaffected.
+const SCAN_MAX_KEY_GAP_MS = 50;
+const SCAN_MIN_LENGTH = 4;
+let scanBuffer = '';
+let scanLastKeyTime = 0;
+
+// This eventlistener only activates on keypresses by a barcode scanner,
+// Which send very quickly. Any special key or input too slow empties the buffer.
+// The result of this (should) be that normal typing is not affected.
+document.addEventListener('keydown', e => {
+  const now = Date.now();
+  const fast = now - scanLastKeyTime <= SCAN_MAX_KEY_GAP_MS;
+  scanLastKeyTime = now;
+
+  if (e.ctrlKey || e.altKey || e.metaKey) {
+    scanBuffer = '';
+  } else if (e.key === 'Enter') {
+    if (fast && scanBuffer.length >= SCAN_MIN_LENGTH) scanBarcode(scanBuffer);
+    scanBuffer = '';
+  } else if (e.key.length === 1) {
+    scanBuffer = fast ? scanBuffer + e.key : e.key;
+  }
+});
+
+function scanError(message) {
+  $('body').toast({ class: 'error', message: message });
+  new Audio('../../static/audio/error.mp3').play();
+}
+
+function scanBarcode(barcode) {
+  // Scanning is only allowed on the products page. Every other usage of the scanner shows an error 
+  if (document.getElementById('products-page').classList.contains('hidden')) {
+    scanError('Open the Products page to scan items.');  
+    return;
+  }
+
+  ipcRenderer.send('request', {
+    name: 'scanProduct',
+    type: 'GET',
+    url: `api/product/barcode?uuid=${uuid}&barcode=${encodeURIComponent(barcode)}`,
+    body: null
+  });
+}
+
+// Handle barcode lookup response
+ipcRenderer.on('scanProduct', (event, arg) => {
+  if (arg.err === null) {
+    if (arg.data === null) return;
+    module.exports.AddToCart(JSON.parse(arg.data));
+    return;
+  }
+
+  console.error(arg.statusCode, arg.err);
+  switch (arg.statusCode) {
+    case 404: // Both an unknown card and an unknown product give 404; the body tells which
+      if (arg.data === 'Card not found') {
+        scanError('Your card was not recognised. Please scan your card again.');
+      } else {
+        scanError('This product was not found.');
+      }
+      break;
+    case 410:
+      scanError('This product is no longer for sale.');
+      break;
+    case 403: // Specific error for (not) being allowed to buy alcohol
+      scanError('You are not allowed to buy this product (right now).');
+      break;
+    default:
+      scanError('Scanning failed, please try again.');
+  }
+});
+
 let query = querystring.parse(global.location.search)
 let uuid = JSON.parse(query['?uuid']);
